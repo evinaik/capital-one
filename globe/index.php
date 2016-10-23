@@ -102,11 +102,13 @@
         colorFn : new THREE.Color(1, 0, 0)
       });
       $.get('scripts/volcanoes.php', function(data) {
-        console.log(data);
         globe.addData(data, {format: 'magnitude'});
         globe.createPoints();
         globe.animate();
         document.body.style.backgroundImage = 'none';
+        globe.addData(data, {format: 'magnitude'});
+        globe.createPoints();
+        globe.animate();
       });
     }
 
