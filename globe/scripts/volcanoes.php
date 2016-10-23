@@ -22,29 +22,3 @@ for ($i = 1, $size = count($temp); $i < $size; $i++) {
 
 echo json_encode($data);
 ?>
-<!-- for i in xrange(1, len(lines)):
-	deaths = 0.0
-	if lines[i][26].strip():
-		deaths = float(lines[i][26])
-	injuries = 0.0
-	if lines[i][30].strip():
-		injuries = float(lines[i][30])
-	nums.append(deaths + injuries)
-	data += jFormat(lines[i][8]) + ', ' + jFormat(lines[i][9]) + ', #' + str(t) + ', '
-	t += 1
-
-# m = numpy.mean(nums)
-# s = numpy.std(nums)
-# nums = [(i - m) / s for i in nums]
-hi = max(nums)
-lo = min(nums)
-nums = [(i - lo) / (hi - lo) for i in nums]
-count = 0
-
-while '#' in data:
-	j = data.find('#' + str(count))
-	data = data[:j] + str(nums[count]) + data[j+2:]
-	count += 1
-
-data = data[:-2]
-data += ']' -->
