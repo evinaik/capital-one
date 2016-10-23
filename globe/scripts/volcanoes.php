@@ -31,6 +31,6 @@ $csec = 'owYftIYKzxdYvSUEdEWkM88emP4SMay61AsXhEnroKRY8NlvsC';
 $access_token = '86003535733194752-ZA7oCmdpKxVuTWM9yPZGvKwmiRzpkZ9';
 $access_token_secret = 'YZbwWkV6pRHEfO7dQ8HtOJFw5ZNdy3WV1uCp0r6Kkwma1';
 
-$connection = new TwitterOAuth(CONSUMER_KEY, CONSUMER_SECRET, $access_token, $access_token_secret);
+$connection = new TwitterOAuth($ckey, $csec, $access_token, $access_token_secret);
 $content = $connection->get("account/verify_credentials");
 ?>
