@@ -14,5 +14,5 @@ $connection = new TwitterOAuth($ckey, $csec, $access_token, $access_token_secret
 $content = $connection->get("account/verify_credentials");
 // $statuses = $connection->get("search/tweets", ["q" => "twitterapi"]);
 
-echo $content;
+echo var_dump($content);
 ?>
