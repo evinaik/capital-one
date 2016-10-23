@@ -21,7 +21,7 @@
 
 // echo json_encode($data);
 <?php
-
+ini_set('display_errors', 1);
 require "twitteroauth/autoload.php";
 
 use Abraham\TwitterOAuth\TwitterOAuth;
