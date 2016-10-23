@@ -15,7 +15,7 @@ for ($i = 1, $size = count($temp); $i < $size; $i++) {
 			$injuries = floatval($erupt[30]);
 		$data[] = $lat;
 		$data[] = $lon;
-		$data[] = 10;
+		$data[] = $deaths + $injuries;
 	}
 }
 
