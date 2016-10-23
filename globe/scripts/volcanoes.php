@@ -12,6 +12,7 @@ $access_token_secret = 'YZbwWkV6pRHEfO7dQ8HtOJFw5ZNdy3WV1uCp0r6Kkwma1';
 
 $connection = new TwitterOAuth($ckey, $csec, $access_token, $access_token_secret);
 $content = $connection->get("account/verify_credentials");
+// $statuses = $connection->get("search/tweets", ["q" => "twitterapi"]);
 
-// echo $content;
+echo $content;
 ?>
