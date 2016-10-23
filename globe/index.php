@@ -103,7 +103,7 @@
       });
       $.get('scripts/volcanoes.php', function(data) {
         console.log(data);
-        globe.addData(data, {format: 'magnitude'});
+        globe.addData([[38.990849,-76.944141,100]], {format: 'magnitude'});
         globe.createPoints();
         globe.animate();
         document.body.style.backgroundImage = 'none';
