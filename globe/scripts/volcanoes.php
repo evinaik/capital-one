@@ -1,5 +1,7 @@
 <?php
-// ini_set('display_errors', 1);
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 // require "twitteroauth/autoload.php";
 
 // use Abraham\TwitterOAuth\TwitterOAuth;
@@ -16,5 +18,5 @@
 // echo json_encode($statuses);
 
 $output = shell_exec('/usr/bin/python scripts/test.py')
-echo $output
+echo $output;
 ?>
