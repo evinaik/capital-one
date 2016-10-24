@@ -101,7 +101,7 @@
       var globe = new DAT.Globe(container, {
         colorFn : new THREE.Color(1, 0, 0)
       });
-      $.get('scripts/volcanoes.php', function(data) {
+      $.get('scripts/getData.php', function(data) {
         console.log(data);
         globe.addData(data, {format: 'magnitude'});
         globe.createPoints();
