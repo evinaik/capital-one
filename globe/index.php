@@ -101,7 +101,7 @@
       var globe = new DAT.Globe(container);
       $.get('scripts/getData.php', function(data) {
         console.log(data);
-        globe.addData([1, 2, 300], {format: 'magnitude'});
+        globe.addData([90, 90, 3], {format: 'magnitude'});
         globe.animate();
         document.body.style.backgroundImage = 'none';
       });
