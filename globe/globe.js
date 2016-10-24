@@ -253,8 +253,6 @@ DAT.Globe = function(container, opts) {
     point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
     point.position.y = 200 * Math.cos(phi);
     point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
-    console.log(phi);
-    console.log(theta);
 
     point.lookAt(mesh.position);
 
