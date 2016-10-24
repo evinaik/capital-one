@@ -1,4 +1,3 @@
-
 <?php
 ini_set('display_errors', 1);
 require "twitteroauth/autoload.php";
@@ -14,5 +13,5 @@ $connection = new TwitterOAuth($ckey, $csec, $access_token, $access_token_secret
 $content = $connection->get("account/verify_credentials");
 $statuses = $connection->get("search/tweets", ["q" => "twitterapi", "lang" => "en"]);
 
-echo var_dump($statuses);
+echo json_encode($statuses);
 ?>
