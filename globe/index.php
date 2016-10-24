@@ -90,7 +90,7 @@
 
   <script type="text/javascript" src="/globe/third-party/Detector.js"></script>
   <script type="text/javascript" src="/globe/third-party/three.min.js"></script>
-  <!-- <script type="text/javascript" src="/globe/third-party/Tween.js"></script> -->
+  <script type="text/javascript" src="/globe/third-party/Tween.js"></script>
   <script type="text/javascript" src="/globe/globe.js"></script>
   <script type="text/javascript">
 
@@ -99,7 +99,7 @@
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      $.get('scripts/getData.php', function(data) {
+      $.get('scripts/getData.php', function(d) {
         console.log(data);
         globe.addData(data, {format: 'magnitude'});
         globe.createPoints();
