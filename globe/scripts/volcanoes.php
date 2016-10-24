@@ -17,6 +17,6 @@ error_reporting(E_ALL);
 
 // echo json_encode($statuses);
 
-$output = shell_exec('test.py');
+$output = shell_exec('/usr/bin/env python test.py');
 echo $output;
 ?>
