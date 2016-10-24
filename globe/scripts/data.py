@@ -10,6 +10,6 @@ api = twitter.Api(consumer_key=CONSUMER_KEY,
                   consumer_secret=CONSUMER_SECRET,
                   access_token_key=ACCESS_KEY,
                   access_token_secret=ACCESS_SECRET)
-results = api.GetSearch(raw_query="q=%3A)")
+results = api.GetSearch(raw_query="q=%3A%29")
 
 print results
