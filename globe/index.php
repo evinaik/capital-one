@@ -102,6 +102,7 @@
       $.get('scripts/getData.php', function(data) {
         console.log(data);
         globe.addData([90, 90, 3], {format: 'magnitude'});
+        globe.createPoints();
         globe.animate();
         document.body.style.backgroundImage = 'none';
       });
