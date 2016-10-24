@@ -99,7 +99,7 @@
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      $.get('scripts/getData.php', function(d) {
+      $.get('scripts/getData.php', function(data) {
         console.log(data);
         globe.addData(data, {format: 'magnitude'});
         globe.createPoints();
