@@ -332,7 +332,7 @@
     this._time = t;
   });
 
-  this.addData = addData;
+  this.addPositive = addPositive;
   this.createPoints = createPoints;
   this.renderer = renderer;
   this.scene = scene;
