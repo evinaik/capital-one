@@ -99,13 +99,13 @@
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      $.get('scripts/getData.php', function(data) {
-        console.log(data);
-        globe.addData([90, 90, 3], {format: 'magnitude'});
-        globe.createPoints();
-        globe.animate();
-        document.body.style.backgroundImage = 'none';
-      });
+      // $.get('scripts/getData.php', function(data) {
+      //   console.log(data);
+      //   globe.addData([90, 90, 3], {format: 'magnitude'});
+      //   globe.createPoints();
+      //   globe.animate();
+      document.body.style.backgroundImage = 'none';
+      // });
     }
 
   </script>
