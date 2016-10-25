@@ -94,21 +94,31 @@
   <script type="text/javascript" src="/globe/globe.js"></script>
   <script type="text/javascript">
 
+    function update(globe) {
+      var xhr = new XMLHttpRequest();
+      xhr.open('GET', '/globe/data/clowns.txt', true);
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var data = xhr.responseText;
+            var lines = data.split("\n");
+            for (i=0; i < lines.length; i++) {
+              line = lines[i].split(",");
+              globe.addData(line[0], line[1], line[2], true);
+            }
+            globe.animate();
+            document.body.style.backgroundImage = 'none'; // remove loading
+          }
+        }
+      };
+      xhr.send(null);
+    }
     if(!Detector.webgl){
       Detector.addGetWebGLMessage();
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      var reader = new FileReader();
-      var clownFile = new File('/globe/data/clowns.txt');
-      reader.onload = function(progressEvent){
-        var lines = this.result.split('\n');
-        for(var line = 0; line < lines.length; line++){
-          console.log(lines[line]);
-        }
-      };
-      reader.readAsText(clownFile);
-      document.body.style.backgroundImage = 'none';
+      update(globe);
 }
 
 </script>
