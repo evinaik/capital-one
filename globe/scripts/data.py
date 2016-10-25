@@ -31,7 +31,7 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, data):
-        with open('clowns.txt', 'a+') as f:
+        with open('../data/clowns.txt', 'a+') as f:
             f.write(data + "\n")
 
 if __name__ == '__main__':
