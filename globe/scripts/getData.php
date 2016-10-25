@@ -1,3 +1,4 @@
 <?php
-echo shell_exec('/usr/bin/env python data.py');
+$output = shell_exec('/usr/bin/envtest.py');
+echo $output;
 ?>
