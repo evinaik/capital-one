@@ -170,7 +170,6 @@
   }
 
   function addData(lat, lng, size, positive) {
-    console.log(lat);
     if (positive)
       addPositive(lat, lng, size);
     else
