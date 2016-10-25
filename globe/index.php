@@ -104,7 +104,7 @@
             var lines = data.split("\n");
             for (i = 0; i < lines.length; i++) {
               line = lines[i].split(",");
-              if (line)
+              console.log(line);
                 globe.addData(line[0], line[1], line[2], true);
             }
             globe.createPoints();
