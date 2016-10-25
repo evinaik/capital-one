@@ -100,7 +100,7 @@
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
       var reader = new FileReader();
-      var clownFile = new File('/data/clowns.txt');
+      var clownFile = new File('/globe/data/clowns.txt');
       reader.onload = function(progressEvent){
         var lines = this.result.split('\n');
         for(var line = 0; line < lines.length; line++){
