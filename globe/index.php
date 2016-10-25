@@ -102,10 +102,12 @@
           if (xhr.status === 200) {
             var data = xhr.responseText;
             var lines = data.split("\n");
-            for (i=0; i < lines.length; i++) {
+            for (i = 0; i < lines.length; i++) {
               line = lines[i].split(",");
-              globe.addData(line[0], line[1], line[2], true);
+              if (line)
+                globe.addData(line[0], line[1], line[2], true);
             }
+            globe.createPoints();
             globe.animate();
             document.body.style.backgroundImage = 'none'; // remove loading
           }
@@ -119,9 +121,9 @@
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
       update(globe);
-}
+    }
 
-</script>
+  </script>
 
 </body>
 

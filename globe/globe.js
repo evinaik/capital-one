@@ -174,7 +174,7 @@
       addPositive(lat, lng, size);
     else
       addNegative(lat, lng, size);
-    createPoints();
+    // createPoints();
   }
 
   function resetPoints() {
