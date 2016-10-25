@@ -174,6 +174,8 @@
       addPositive(lat, lng, size);
     else
       addNegative(lat, lng, size);
+    createPoints();
+    animate();
   }
 
   function addPositive(lat, lng, size) {
