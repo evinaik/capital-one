@@ -99,16 +99,19 @@
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      // $.get('scripts/getData.php', function(data) {
-      //   console.log(data);
-      //   globe.addData([90, 90, 3], {format: 'magnitude'});
-      //   globe.createPoints();
-      //   globe.animate();
+      var reader = new FileReader();
+      var clownFile = '/data/clowns.txt'
+      reader.onload = function(progressEvent){
+        var lines = this.result.split('\n');
+        for(var line = 0; line < lines.length; line++){
+          console.log(lines[line]);
+        }
+      };
+      reader.readAsText(clownFile);
       document.body.style.backgroundImage = 'none';
-      // });
-    }
+}
 
-  </script>
+</script>
 
 </body>
 
