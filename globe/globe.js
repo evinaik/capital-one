@@ -170,7 +170,7 @@
   }
 
   function addPositive(lat, lng, size) {
-    tvar lat, lng, size, color, i, step, colorFnWrapper;
+    var lat, lng, size, color, i, step, colorFnWrapper;
 
     var subgeo = new THREE.Geometry();
     color = new THREE.color(0xFF0000);
