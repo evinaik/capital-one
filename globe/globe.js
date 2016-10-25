@@ -173,7 +173,7 @@
     var lat, lng, size, color, i, step, colorFnWrapper;
 
     var subgeo = new THREE.Geometry();
-    color = new THREE.color(0xFF0000);
+    color = new THREE.Color(0xFF0000);
     size = size*200;
     addPoint(lat, lng, size, color, subgeo);
     this._baseGeometry = subgeo;
