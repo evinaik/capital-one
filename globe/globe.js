@@ -169,7 +169,24 @@
     }
   }
 
+  function add(lat, lng, size, positive) {
+    if (positive)
+      addPositive(lat, lng, size);
+    else
+      addNegative(lat, lng, size);
+  }
+
   function addPositive(lat, lng, size) {
+    var lat, lng, size, color, i, step, colorFnWrapper;
+
+    var subgeo = new THREE.Geometry();
+    color = new THREE.Color(0x66FF00);
+    size = size*200;
+    addPoint(lat, lng, size, color, subgeo);
+    this._baseGeometry = subgeo;
+  }
+
+  function addNegative(lat, lng, size) {
     var lat, lng, size, color, i, step, colorFnWrapper;
 
     var subgeo = new THREE.Geometry();
