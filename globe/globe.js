@@ -177,6 +177,10 @@
     createPoints();
   }
 
+  function resetPoints() {
+    scene = new THREE.Scene();
+  }
+
   function addPositive(lat, lng, size) {
     var lat, lng, size, color, i, step, colorFnWrapper;
 
@@ -352,6 +356,7 @@
 
   this.addData = addData;
   this.createPoints = createPoints;
+  this.resetPoints = resetPoints;
   this.renderer = renderer;
   this.scene = scene;
 
