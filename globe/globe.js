@@ -178,7 +178,8 @@
   }
 
   function resetPoints() {
-    scene = new THREE.Scene();
+    init();
+    animate();
   }
 
   function addPositive(lat, lng, size) {
