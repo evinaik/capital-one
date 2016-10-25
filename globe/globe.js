@@ -169,7 +169,7 @@
     }
   }
 
-  function add(lat, lng, size, positive) {
+  function addData(lat, lng, size, positive) {
     if (positive)
       addPositive(lat, lng, size);
     else
@@ -351,7 +351,7 @@
     this._time = t;
   });
 
-  this.addPositive = addPositive;
+  this.addData = addData;
   this.createPoints = createPoints;
   this.renderer = renderer;
   this.scene = scene;
