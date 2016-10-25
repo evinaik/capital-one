@@ -104,12 +104,11 @@
             var lines = data.split("\n");
             for (i = 0; i < lines.length; i++) {
               line = lines[i].split(",");
-              if (line)
-                globe.addData(parseFloat(line[0]), parseFloat(line[1]), parseFloat(line[2]), true);
+              globe.addData(parseFloat(line[0]), parseFloat(line[1]), parseFloat(line[2]), true);
             }
             globe.createPoints();
             globe.animate();
-              document.body.style.backgroundImage = 'none'; // remove loading
+            document.body.style.backgroundImage = 'none'; // remove loading
             }
           }
         };
