@@ -97,36 +97,34 @@
     function update(globe) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '/globe/data/clowns.txt', true);
-      if (xhr) {
-        xhr.onreadystatechange = function(e) {
-          if (xhr.readyState === 4) {
-            if (xhr.status === 200) {
-              var data = xhr.responseText;
-              var lines = data.split("\n");
-              for (i = 0; i < lines.length; i++) {
-                line = lines[i].split(",");
-                if (line)
-                  globe.addData(line[0], line[1], line[2], true);
-              }
-              globe.createPoints();
-              globe.animate();
+      xhr.onreadystatechange = function(e) {
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var data = xhr.responseText;
+            var lines = data.split("\n");
+            for (i = 0; i < lines.length; i++) {
+              line = lines[i].split(",");
+              if (line)
+                globe.addData(line[0], line[1], line[2], true);
+            }
+            globe.createPoints();
+            globe.animate();
               document.body.style.backgroundImage = 'none'; // remove loading
             }
           }
         };
         xhr.send(null);
       }
-    }
-    if(!Detector.webgl){
-      Detector.addGetWebGLMessage();
-    } else {
-      var container = document.getElementById('container');
-      var globe = new DAT.Globe(container);
-      update(globe);
-    }
+      if(!Detector.webgl){
+        Detector.addGetWebGLMessage();
+      } else {
+        var container = document.getElementById('container');
+        var globe = new DAT.Globe(container);
+        update(globe);
+      }
 
-  </script>
+    </script>
 
-</body>
+  </body>
 
-</html>
+  </html>
