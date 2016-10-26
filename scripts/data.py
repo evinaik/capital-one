@@ -4,7 +4,7 @@ from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
 from senti_classifier import senti_classifier
 from time import sleep
-import nltk
+import datetime, nltk
 
 nltk.data.path.append('../nltk_data/')
 
@@ -15,6 +15,7 @@ consumer_secret = 'Pc9zJokOo9ciyDpSpwbicqYQhIySTyzZJ76JY2euByogLXLWPF'
 access_token = '786003535733194752-wFxrt7OD1sCbba0Y3mtLsZcZmHqaRGR'
 access_token_secret = '7tuK1HM0gxe8LrGjJRPMUPFqZjfJif32ekXAemOjMODVP'
 sleepTime = 30
+allData = []
 
 class TweetStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
@@ -36,9 +37,16 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size, text):
-        with open('../data/clowns.txt', 'a+') as f:
+        with open('../data/clowns.txt', 'w+') as f:
             pos_score, neg_score = senti_classifier.polarity_scores([text])
-            f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + "," + ('1' if pos_score >= neg_score else '0') + ",")
+            allData.push(lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.now().seconds)
+            temp = ''
+            curr = datetime.now().seconds
+            while curr - allData[4] >= 5:
+                i = i[5:]
+            for i in allData:
+                temp += str(i) + ","
+            f.write(temp)
 
 def call(streamer):
     try:
