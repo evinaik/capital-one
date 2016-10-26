@@ -170,6 +170,7 @@
   }
 
   function addData(sets, positive) {
+    console.log(sets);
     var color;
     if (positive)
       color = new THREE.Color(0x66FF00);
