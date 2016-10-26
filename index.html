@@ -103,10 +103,10 @@
             var data = xhr.responseText;
             var lines = data.split("\n");
             var arr = [];
-            for (i = 0; i < 1; i++) {
+            for (i = 0; i < lines.length; i++) {
               if (lines[i]) {
                 arr.push(lines[i].split(",").map(parseFloat));
-                console.log(arr);
+                console.log(arr[i]);
               }
             }
             globe.addData(arr, false);
