@@ -210,7 +210,10 @@
       point.geometry.faces[i].color = color;
 
     }
-    THREE.GeometryUtils.merge(subgeo, point);
+    if(point.matrixAutoUpdate){
+      point.updateMatrix();
+    }
+    subgeo.merge(point.geometry, point.matrix);
   }
 
   function onMouseDown(event) {
