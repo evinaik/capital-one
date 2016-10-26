@@ -109,7 +109,7 @@
                 arr.push([i, line]);
               }
             }
-            data = [arr];
+            data = JSON.parse(arr);
             globe.addData(data, {format: 'magnitude', animated: true});
           }
           globe.createPoints();
