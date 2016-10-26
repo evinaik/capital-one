@@ -100,7 +100,7 @@
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = get_json(xhr.responseText);
+            var data = xhr.responseText;
             var lines = data.split("\n");
             data = [];
             for (i = 0; i < lines.length; i++) {
