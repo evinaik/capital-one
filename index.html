@@ -110,7 +110,7 @@
               }
             }
             console.log(arr);
-            data = JSON.parse(arr);
+            data = JSON.stringify(arr);
             globe.addData(data, {format: 'magnitude', animated: true});
           }
           globe.createPoints();
