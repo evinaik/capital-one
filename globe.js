@@ -177,18 +177,13 @@ DAT.Globe = function(container) {
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
+      scene.remove(this.points);
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: THREE.FaceColors,
         morphTargets: false
       }));
-      if (!(lastObj.get() === 'empty')) {
-        scene.remove(lastObj.get());
-        console.log(scene);
-        console.log(this.points);
-      }
       scene.add(this.points);
-      lastObj.set(this.points);
     }
   }
 
