@@ -94,7 +94,18 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe, container) {
+    function Class()
+    {
+    }
+
+    Class.prototype = new function()
+    {
+      _privateStatic = 0;
+      this.get = function() { return _privateStatic; }
+      this.inc = function(x) { _privateStatic+ = x; }
+    };
+
+    function update(globe, container, last) {
       globe = new DAT.Globe(container);
       window.globe = globe;
       var xhr = new XMLHttpRequest();
@@ -102,27 +113,29 @@
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = JSON.parse('[' + xhr.responseText.slice(0, -1) + ']');
+            var data = JSON.parse('[' + xhr.responseText.slice(last, -1) + ']');
+            last.inc(data.length);
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
             globe.createPoints();
-            document.body.style.backgroundImage = 'none'; // remove loading
-          }
+          document.body.style.backgroundImage = 'none'; // remove loading
         }
-      };
-      xhr.send(null);
-    }
-    if(!Detector.webgl){
-      Detector.addGetWebGLMessage();
-    } else {
-      var container = document.getElementById('container');
-      var globe;
-      update(globe, container);
-      globe.animate();
-      document.body.style.backgroundImage = 'none'; // remove loading
-    }
+      }
+    };
+    xhr.send(null);
+  }
+  if(!Detector.webgl){
+    Detector.addGetWebGLMessage();
+  } else {
+    var container = document.getElementById('container');
+    var globe;
+    var last = new Class();
+    update(globe, container, last);
+    globe.animate();
+    document.body.style.backgroundImage = 'none'; // remove loading
+  }
 
-  </script>
+</script>
 
 </body>
 
