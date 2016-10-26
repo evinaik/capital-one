@@ -100,18 +100,12 @@
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = xhr.responseText;
-            var lines = data.split("\n");
-            data = []
-            for (i = 0; i < lines.length; i++) {
-              if (lines[i]) {
-                var line = lines[i].split(",").map(parseFloat);
-                data.push(line[0], line[1], line[2]);
-              }
-            }
-            globe.addData(JSON.parse(data), false);
-          }
-          globe.createPoints();
+            var data = JSON.parse('[' + xhr.responseText.slice(0, -1) + ']');
+            window.data = data;
+            globe.addData(data, {format: 'magnitude', name: 'one', animated: true});
+            globe.createPoints();
+            globe.animate();
+            document.body.style.backgroundImage = 'none'; // remove loading
         }
         _callback();
       };
