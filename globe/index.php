@@ -106,21 +106,21 @@
               line = lines[i].split(",");
               globe.addData(parseFloat(line[0]), parseFloat(line[1]), parseFloat(line[2]), true);
             }
-            globe.createPoints();
-            globe.animate();
             document.body.style.backgroundImage = 'none'; // remove loading
-            }
           }
-        };
-        xhr.send(null);
-      }
-      if(!Detector.webgl){
-        Detector.addGetWebGLMessage();
-      } else {
-        var container = document.getElementById('container');
-        var globe = new DAT.Globe(container);
-        update(globe);
-      }
+        }
+      };
+      xhr.send(null);
+    }
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+      var container = document.getElementById('container');
+      var globe = new DAT.Globe(container);
+      update(globe);
+      globe.createPoints();
+      globe.animate();
+    }
 
     </script>
 
