@@ -168,7 +168,7 @@
     var size = sets[2]*200;
     addPoint(sets[0], sets[1], size, color, subgeo);
     this._baseGeometry = subgeo;
-  };
+  }
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
