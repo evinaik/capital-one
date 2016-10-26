@@ -166,6 +166,7 @@ DAT.Globe = function(container, opts) {
   }
 
   function addData(data, opts) {
+    console.log(data);
     var lat, lng, size, color, i, step, colorFnWrapper;
 
     opts.animated = opts.animated || false;
