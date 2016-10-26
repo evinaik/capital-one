@@ -81,6 +81,8 @@ DAT.Globe = function(container) {
 
   var overRenderer;
 
+  var geometry;
+
   var curZoomSpeed = 0;
   var zoomSpeed = 50;
 
@@ -107,7 +109,7 @@ DAT.Globe = function(container) {
 
     scene = new THREE.Scene();
 
-    var geometry = new THREE.SphereGeometry(200, 40, 30);
+    geometry = new THREE.SphereGeometry(200, 40, 30);
 
     shader = Shaders['earth'];
     uniforms = THREE.UniformsUtils.clone(shader.uniforms);
