@@ -106,6 +106,7 @@
             for (i = 0; i < lines.length; i++) {
               if (lines[i]) {
                 arr.push(lines[i].split(",").map(parseFloat));
+                console.log(arr[i]);
               }
             }
             globe.addData(arr, false);
