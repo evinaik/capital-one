@@ -34,9 +34,6 @@ class TweetStreamer(TwythonStreamer):
         with open('../data/clowns.txt', 'a+') as f:
             f.write(lat + "," + lon + "," + str(size/(size+100.0)) + ",")
 
-if __name__ == '__main__':
-    call()
-
 def call():
     try:
         streamer = TweetStreamer(consumer_key, consumer_secret,
@@ -45,3 +42,6 @@ def call():
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
         call()
+
+if __name__ == '__main__':
+    call()
