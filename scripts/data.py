@@ -41,10 +41,10 @@ class TweetStreamer(TwythonStreamer):
 
 def call(streamer):
     try:
-
         streamer.statuses.filter(track = 'clown,trump,clinton')
+
     except:
-        sleep(60
+        sleep(60)
         call(streamer)
 
 if __name__ == '__main__':
