@@ -159,6 +159,7 @@
   }
 
   function addData(data, positive, opts) {
+    console.log(data);
     var lat, lng, size, color;
     if (positive)
       color = new THREE.Color(0x66FF00);
