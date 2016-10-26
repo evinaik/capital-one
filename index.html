@@ -94,11 +94,11 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function Class()
+    function LastLength()
     {
     }
 
-    Class.prototype = new function()
+    LastLength.prototype = new function()
     {
       _privateStatic = 0;
       this.get = function() { return _privateStatic; }
@@ -132,7 +132,7 @@
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
     window.globe = globe;
-    var last = new Class();
+    var last = new LastLength();
     update(globe, container, last);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading

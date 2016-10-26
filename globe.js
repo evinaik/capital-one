@@ -13,7 +13,22 @@
 
  var DAT = DAT || {};
 
- DAT.Globe = function(container) {
+ function Last()
+ {
+ }
+
+ Last.prototype = new function()
+ {
+  _privateStatic = 0;
+  this.get = function() { return _privateStatic; }
+  this.set = function(x) { _privateStatic = x; }
+};
+
+var lastObj = new Last();
+lastObj.set('empty');
+
+
+DAT.Globe = function(container) {
   var imgDir = '/';
 
   var Shaders = {
@@ -165,7 +180,10 @@
         vertexColors: THREE.FaceColors,
         morphTargets: false
       }));
+      if (!(lastObj.get() === 'empty'))
+        scene.remove(lastObj.get());
       scene.add(this.points);
+      lastObj.set(this.points);
       console.log(scene);
     }
   }
@@ -179,9 +197,9 @@
       size = data[i + 2];
       size *= 1000;
       if (data[i + 3] == 1)
-      color = new THREE.Color(0x66FF00);
-    else
-      color = new THREE.Color(0xFF0000);
+        color = new THREE.Color(0x66FF00);
+      else
+        color = new THREE.Color(0xFF0000);
       addPoint(lat, lng, size, color, subgeo);
     }
     this._baseGeometry = subgeo;
