@@ -147,7 +147,7 @@ DAT.Globe = function(container) {
     geometry = new THREE.BoxGeometry(0.75, 0.75, 1);
     geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
 
-    point = new THREE.Mesh(geometry);
+    // point = new THREE.Mesh(geometry);
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(w, h);
@@ -174,6 +174,7 @@ DAT.Globe = function(container) {
   }
 
   function createPoints() {
+    point = new THREE.Mesh(geometry);
     if (this._baseGeometry !== undefined) {
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
