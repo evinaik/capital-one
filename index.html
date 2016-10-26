@@ -94,7 +94,7 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe, _callback) {
+    function update(globe) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
@@ -107,20 +107,18 @@
             globe.createPoints();
             document.body.style.backgroundImage = 'none'; // remove loading
           }
-          _callback();
-        };
-        xhr.send(null);
-      }
+        }
+      };
+      xhr.send(null);
     }
     if(!Detector.webgl){
       Detector.addGetWebGLMessage();
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      update(globe, function() {
-        globe.animate();
-        document.body.style.backgroundImage = 'none'; // remove loading
-      });
+      update();
+      globe.animate();
+      document.body.style.backgroundImage = 'none'; // remove loading
     }
 
   </script>
