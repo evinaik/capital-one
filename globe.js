@@ -166,6 +166,7 @@
         morphTargets: false
       }));
       scene.add(this.points);
+      console.log(scene);
     }
   }
 
