@@ -107,7 +107,6 @@
                 globe.addData(lines[i].split(",").map(parseFloat), false);
               }
             }
-            document.body.style.backgroundImage = 'none'; // remove loading
           }
         }
         globe.createPoints();
@@ -122,6 +121,7 @@
       var globe = new DAT.Globe(container);
       update(globe, function() {
         globe.animate();
+        document.body.style.backgroundImage = 'none'; // remove loading
       });
     }
 
