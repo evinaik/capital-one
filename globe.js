@@ -181,7 +181,7 @@
       lat = data[i];
       lng = data[i + 1];
       size = data[i + 2];
-      // size = size;
+      size *= 1000;
       addPoint(lat, lng, size, color, subgeo);
     }
     this._baseGeometry = subgeo;
