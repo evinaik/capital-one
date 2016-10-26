@@ -2,6 +2,9 @@
 
 from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
+from senti_classifier import senti_classifier
+
+nltk.data.path.append('./nltk_data/')
 
 # normally hide these values, but this is a new account made solely for this
 # purpose so security is not a key feature at this point in development
@@ -24,6 +27,7 @@ class TweetStreamer(TwythonStreamer):
             except:
                 return
             if loc:
+                print data
                 self.write(str(loc.latitude), str(loc.longitude), data['user']['followers_count'])
 
     def on_error(self, status_code, data):
@@ -31,8 +35,9 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size):
-        with open('../data/clowns.txt', 'a+') as f:
-            f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + ",")
+        # print senti_classifier.polarity_scores(sentences)
+        # with open('../data/clowns.txt', 'a+') as f:
+            # f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + ",")
 
 def call():
     try:
