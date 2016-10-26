@@ -32,7 +32,7 @@ class TweetStreamer(TwythonStreamer):
 
     def write(self, data):
         with open('../data/clowns.txt', 'a+') as f:
-            f.write(data + "\n")
+            f.write(data + ",")
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
