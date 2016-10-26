@@ -170,9 +170,6 @@
       lat = data[0];
       lng = data[1];
       size = data[2];
-      console.log(lat);
-      console.log(lng);
-      console.log(size);
       addPoint(lat, lng, size, color, this._baseGeometry);
     }
     if(this._morphTargetId === undefined) {
