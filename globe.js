@@ -174,7 +174,6 @@ DAT.Globe = function(container) {
   }
 
   function createPoints() {
-    point = new THREE.Mesh(geometry);
     if (this._baseGeometry !== undefined) {
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
@@ -191,6 +190,7 @@ DAT.Globe = function(container) {
   }
 
   function addData(data) {
+    point = new THREE.Mesh(geometry);
     var color;
     var subgeo = new THREE.Geometry();
     for (i = 0; i < data.length; i += 4) {
