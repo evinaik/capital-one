@@ -14,6 +14,7 @@ consumer_key = 'wOq8bUAoKkgDTC0XHOQvU0eY1'
 consumer_secret = 'Pc9zJokOo9ciyDpSpwbicqYQhIySTyzZJ76JY2euByogLXLWPF'
 access_token = '786003535733194752-wFxrt7OD1sCbba0Y3mtLsZcZmHqaRGR'
 access_token_secret = '7tuK1HM0gxe8LrGjJRPMUPFqZjfJif32ekXAemOjMODVP'
+sleepTime = 30
 
 class TweetStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
@@ -40,16 +41,16 @@ class TweetStreamer(TwythonStreamer):
             f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + "," + ('1' if pos_score >= neg_score else '0') + ",")
 
 def call(streamer):
-    # try:
-    #     streamer.statuses.filter(track = 'clown,trump,clinton')
-    # except:
-    #     print 'Sleeping for 60 seconds'
-    #     for i in xrange(1, 61):
-    #         sleep(1)
-    #         print str(i) + '...'
-    #     call(streamer)
-
-    streamer.statuses.filter(track = 'clown,trump,clinton')
+    try:
+        streamer = TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret)
+        streamer.statuses.filter(track = 'clown,trump,clinton')
+    except:
+        print 'Sleeping for ' + str(sleepTime) + ' seconds'
+        for i in xrange(0, sleepTime):
+            sleep(1)
+            print str(i + 1) + '...'
+        call(streamer)
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
