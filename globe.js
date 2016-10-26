@@ -341,7 +341,6 @@
 
   this.addData = addData;
   this.createPoints = createPoints;
-  this.resetPoints = resetPoints;
   this.renderer = renderer;
   this.scene = scene;
 
