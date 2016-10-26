@@ -170,18 +170,18 @@
     }
   }
 
-  function addData(data, positive) {
+  function addData(data) {
     var color;
-    if (positive)
-      color = new THREE.Color(0x66FF00);
-    else
-      color = new THREE.Color(0xFF0000);
     var subgeo = new THREE.Geometry();
-    for (i = 0; i < data.length; i += 3) {
+    for (i = 0; i < data.length; i += 4) {
       lat = data[i];
       lng = data[i + 1];
       size = data[i + 2];
       size *= 1000;
+      if (data[i + 3] === 'True')
+      color = new THREE.Color(0x66FF00);
+    else
+      color = new THREE.Color(0xFF0000);
       addPoint(lat, lng, size, color, subgeo);
     }
     this._baseGeometry = subgeo;

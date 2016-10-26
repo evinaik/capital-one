@@ -19,24 +19,24 @@ class TweetStreamer(TwythonStreamer):
         super(TweetStreamer, self).__init__(*args, **kwargs)
         self.geo = Nominatim()
     def on_success(self, data):
-        print data
         if 'geo' in data and data['geo']:
-            self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), + data['user']['followers_count'])
+            self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), data['user']['followers_count'], data['text'])
         elif 'user' in data and 'location' in data['user'] and data['user']['location']:
             try:
                 loc = self.geo.geocode(data['user']['location'])
             except:
                 return
             if loc:
-                self.write(str(loc.latitude), str(loc.longitude), data['user']['followers_count'])
+                self.write(str(loc.latitude), str(loc.longitude), data['user']['followers_count'], data['text'])
 
     def on_error(self, status_code, data):
         print status_code
         self.disconnect()
 
-    def write(self, lat, lon, size):
+    def write(self, lat, lon, size, text):
         with open('../data/clowns.txt', 'a+') as f:
-            f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + ",")
+            pos_score, neg_score = senti_classifier.polarity_scores([text])
+            f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + "," + str(pos_score >= neg_score) + ",")
 
 def call():
     try:
