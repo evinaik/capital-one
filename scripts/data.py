@@ -9,10 +9,10 @@ nltk.data.path.append('./nltk_data/')
 
 # normally hide these values, but this is a new account made solely for this
 # purpose so security is not a key feature at this point in development
-consumer_key = 'VTiKXADVTl6WR1r0d3I28VD4y'
-consumer_secret = 'owYftIYKzxdYvSUEdEWkM88emP4SMay61AsXhEnroKRY8NlvsC'
-access_token = '786003535733194752-ZA7oCmdpKxVuTWM9yPZGvKwmiRzpkZ9'
-access_token_secret = 'YZbwWkV6pRHEfO7dQ8HtOJFw5ZNdy3WV1uCp0r6Kkwma1'
+consumer_key = 'wOq8bUAoKkgDTC0XHOQvU0eY1'
+consumer_secret = 'Pc9zJokOo9ciyDpSpwbicqYQhIySTyzZJ76JY2euByogLXLWPF'
+access_token = '786003535733194752-wFxrt7OD1sCbba0Y3mtLsZcZmHqaRGR'
+access_token_secret = ' 7tuK1HM0gxe8LrGjJRPMUPFqZjfJif32ekXAemOjMODVP'
 
 class TweetStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
@@ -38,14 +38,14 @@ class TweetStreamer(TwythonStreamer):
             pos_score, neg_score = senti_classifier.polarity_scores([text])
             f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + "," + str(pos_score >= neg_score) + ",")
 
-def call():
+def call(streamer):
     try:
-        streamer = TweetStreamer(consumer_key, consumer_secret,
-                                 access_token, access_token_secret)
 
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
-        call()
+        call(streamer)
 
 if __name__ == '__main__':
-    call()
+    streamer = TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret)
+    call(streamer)
