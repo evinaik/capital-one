@@ -43,7 +43,7 @@ def call(streamer):
     try:
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
-        print Sleeping for 60 seconds
+        print 'Sleeping for 60 seconds'
         for i in xrange(1, 61):
             sleep(1)
             print i + '...'
