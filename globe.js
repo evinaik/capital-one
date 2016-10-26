@@ -158,17 +158,6 @@
     }, false);
   }
 
-  function createPoints() {
-    if (this._baseGeometry !== undefined) {
-      this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        vertexColors: THREE.FaceColors,
-        morphTargets: false
-      }));
-      scene.add(this.points);
-    }
-  }
-
   function addData(sets, positive) {
     var color;
     if (positive)
@@ -179,6 +168,17 @@
     var size = sets[2]*200;
     addPoint(sets[0], sets[1], size, color, subgeo);
     this._baseGeometry = subgeo;
+  };
+
+  function createPoints() {
+    if (this._baseGeometry !== undefined) {
+      this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        vertexColors: THREE.FaceColors,
+        morphTargets: false
+      }));
+      scene.add(this.points);
+    }
   }
 
   function resetPoints() {
