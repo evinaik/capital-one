@@ -113,8 +113,9 @@
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = JSON.parse('[' + xhr.responseText.slice(last + 1, -1) + ']');
-            last.inc(data.length);
+            var temp = data.length
+            var data = JSON.parse('[' + xhr.responseText.slice(last.get() + 1).slice(0, -1) + ']');
+            last.inc(temp);
             console.log(data);
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
