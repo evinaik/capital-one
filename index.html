@@ -106,8 +106,8 @@
     };
 
     function update(globe, container, last) {
-      globe = new DAT.Globe(container);
-      window.globe = globe;
+      // globe = new DAT.Globe(container);
+      // window.globe = globe;
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
@@ -131,7 +131,8 @@
     Detector.addGetWebGLMessage();
   } else {
     var container = document.getElementById('container');
-    var globe;
+    var globe = new DAT.Globe(container);
+    window.globe = globe;
     var last = new Class();
     update(globe, container, last);
     globe.animate();
