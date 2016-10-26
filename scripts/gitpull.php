@@ -1,1 +1,1 @@
-<?php `/usr/bin/env git pull`;
+<?php echo shell_exec('/usr/bin/env git pull');
