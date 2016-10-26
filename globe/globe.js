@@ -357,6 +357,7 @@
   });
 
   this.addData = addData;
+  this.addNegative = addNegative;
   this.createPoints = createPoints;
   this.resetPoints = resetPoints;
   this.renderer = renderer;
