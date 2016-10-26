@@ -103,8 +103,7 @@
             var data = xhr.responseText;
             var lines = data.split("\n");
             for (i = 0; i < lines.length; i++) {
-              line = lines[i].split(",");
-              globe.addData(parseFloat(line[0]), parseFloat(line[1]), parseFloat(line[2]), true);
+              globe.addData(JSON.parse(lines[i].split(",")), true);
             }
             document.body.style.backgroundImage = 'none'; // remove loading
           }

@@ -169,11 +169,12 @@
     }
   }
 
-  function addData(lat, lng, size, positive) {
+  function addData(sets, positive) {
+    console.log(sets);
     if (positive)
-      addPositive(lat, lng, size);
+      addPositive(sets[0], sets[1], sets[2]);
     else
-      addNegative(lat, lng, size);
+      addNegative(sets[0], sets[1], sets[2]);
     // createPoints();
   }
 
