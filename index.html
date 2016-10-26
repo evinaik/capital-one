@@ -94,27 +94,22 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function get_json(d) {
-      if (!d)
-        return;
-      var lines = d.split("\n");
-      d = [];
-      for (i = 0; i < lines.length; i++) {
-        if (lines[i]) {
-          var line = lines[i].split(",").map(parseFloat);
-          d.push(line[0], line[1], line[2]);
-        }
-      }
-      return JSON.stringify(data);
-    }
-
     function update(globe, _callback) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = JSON.parse(get_json(xhr.responsetext));
+            var data = get_json(xhr.responseText);
+            var lines = data.split("\n");
+            data = [];
+            for (i = 0; i < lines.length; i++) {
+              if (lines[i]) {
+                var line = lines[i].split(",").map(parseFloat);
+                data.push(line[0], line[1], line[2]);
+              }
+            }
+            data = JSON.parse(JSON.stringify(data));
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
           }
@@ -135,8 +130,8 @@
       });
     }
 
-  </script>
+    </script>
 
-</body>
+  </body>
 
-</html>
+  </html>
