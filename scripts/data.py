@@ -3,6 +3,7 @@
 from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
 from senti_classifier import senti_classifier
+from time import sleep
 import nltk
 
 nltk.data.path.append('./nltk_data/')
@@ -43,6 +44,7 @@ def call(streamer):
 
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
+        sleep(60
         call(streamer)
 
 if __name__ == '__main__':
