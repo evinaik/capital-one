@@ -6,7 +6,7 @@ from senti_classifier import senti_classifier
 from time import sleep
 import nltk
 
-nltk.data.path.append('./nltk_data/')
+nltk.data.path.append('../nltk_data/')
 
 # normally hide these values, but this is a new account made solely for this
 # purpose so security is not a key feature at this point in development
