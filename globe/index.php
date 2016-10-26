@@ -94,7 +94,7 @@
   <script type="text/javascript" src="/globe/globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe) {
+    function update(globe, _callback) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '/globe/data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
@@ -110,7 +110,7 @@
           }
         }
         globe.createPoints();
-        globe.animate();
+        _callback();
       };
       xhr.send(null);
     }
@@ -119,7 +119,9 @@
     } else {
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
-      update(globe);
+      update(globe, function() {
+        globe.animate();
+      });
     }
 
     </script>
