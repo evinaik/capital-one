@@ -102,11 +102,16 @@
           if (xhr.status === 200) {
             var data = xhr.responseText;
             var lines = data.split("\n");
+            data = [];
             for (i = 0; i < lines.length; i++) {
               if (lines[i]) {
-                globe.addData(JSON.parse(JSON.stringify(lines[i].split(",").map(parseFloat))), false);
+                var line = lines[i].split(",").map(parseFloat);
+                data.push(line[0], line[1], line[2]);
               }
             }
+            data = JSON.parse(JSON.stringify(data));
+            window.data = data;
+            globe.addData(data, {format: 'magnitude', animated: true});
           }
           globe.createPoints();
         }
