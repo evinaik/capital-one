@@ -13,7 +13,7 @@
 
  var DAT = DAT || {};
 
- DAT.Globe = function(container) {
+ DAT.Globe = function(container, opts) {
   var imgDir = '/';
 
   var Shaders = {
@@ -158,32 +158,54 @@
     }, false);
   }
 
-  function addData(sets, positive) {
-    var color;
+  function addData(data, positive) {
+    var lat, lng, size, color;
     if (positive)
       color = new THREE.Color(0x66FF00);
     else
       color = new THREE.Color(0xFF0000);
+
+    if (this._baseGeometry === undefined) {
+      this._baseGeometry = new THREE.Geometry();
+      lat = data[i];
+      lng = data[i + 1];
+      size = data[i + 2];
+      addPoint(lat, lng, size, color, this._baseGeometry);
+    }
+    if(this._morphTargetId === undefined) {
+      this._morphTargetId = 0;
+    } else {
+      this._morphTargetId += 1;
+    }
+    opts.name = opts.name || 'morphTarget'+this._morphTargetId;
     var subgeo = new THREE.Geometry();
-    var size = sets[2]*200;
-    addPoint(sets[0], sets[1], size, color, subgeo);
-    this._baseGeometry = subgeo;
+    lat = data[i];
+    lng = data[i + 1];
+    size = data[i + 2];
+    size = size*200;
+    addPoint(lat, lng, size, color, subgeo);
+    this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
+
   }
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
+      if (this._baseGeometry.morphTargets.length < 8) {
+        console.log('t l',this._baseGeometry.morphTargets.length);
+        var padding = 8-this._baseGeometry.morphTargets.length;
+        console.log('padding', padding);
+        for(var i=0; i<=padding; i++) {
+          console.log('padding',i);
+          this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
+        }
+      }
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: THREE.FaceColors,
-        morphTargets: false
+        morphTargets: true
       }));
       scene.add(this.points);
     }
-  }
-
-  function resetPoints() {
-    init();
-    animate();
   }
 
   function addPoint(lat, lng, size, color, subgeo) {
@@ -341,11 +363,9 @@
 
   this.addData = addData;
   this.createPoints = createPoints;
-  this.resetPoints = resetPoints;
   this.renderer = renderer;
   this.scene = scene;
 
   return this;
 
 };
-
