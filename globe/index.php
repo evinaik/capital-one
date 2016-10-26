@@ -98,19 +98,19 @@
       var xhr = new XMLHttpRequest();
       xhr.open('GET', '/globe/data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
-      if (xhr.readyState === 4) {
-        if (xhr.status === 200) {
-          var data = xhr.responseText;
-          var lines = data.split("\n");
-          for (i = 0; i < lines.length; i++) {
-            if (lines[i])
-              globe.addData(lines[i].split(",").map(parseFloat), true);
+        if (xhr.readyState === 4) {
+          if (xhr.status === 200) {
+            var data = xhr.responseText;
+            var lines = data.split("\n");
+            for (i = 0; i < lines.length; i++) {
+              if (lines[i])
+                globe.addData(lines[i].split(",").map(parseFloat), true);
+            }
+            document.body.style.backgroundImage = 'none'; // remove loading
           }
-          document.body.style.backgroundImage = 'none'; // remove loading
         }
-      }
-      globe.createPoints();
-      globe.animate();
+        globe.createPoints();
+        globe.animate();
       };
       xhr.send(null);
     }
