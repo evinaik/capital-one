@@ -185,6 +185,7 @@ DAT.Globe = function(container) {
       if (!(lastObj.get() === 'empty')) {
         scene.remove(lastObj.get());
         console.log(scene);
+        console.log(this.points);
       }
       scene.add(this.points);
       lastObj.set(this.points);
