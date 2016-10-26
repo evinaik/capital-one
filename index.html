@@ -105,7 +105,6 @@
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
             globe.createPoints();
-            globe.animate();
             document.body.style.backgroundImage = 'none'; // remove loading
           }
         }
@@ -117,6 +116,7 @@
     } else {
       var container = document.getElementById('container');
       var globe;
+      globe.animate();
       update(globe, container);
       document.body.style.backgroundImage = 'none'; // remove loading
     }
