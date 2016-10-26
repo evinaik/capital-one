@@ -106,8 +106,6 @@
     };
 
     function update(globe, container, last) {
-      // globe = new DAT.Globe(container);
-      // window.globe = globe;
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
@@ -117,10 +115,11 @@
             var temp = data.length
             var data = JSON.parse('[' + data.slice(last.get() + 1).slice(0, -1) + ']');
             last.set(temp);
-            console.log(data);
             window.data = data;
-            globe.addData(data, {format: 'magnitude', animated: true});
-            globe.createPoints();
+            if (data.length > 0) {
+              globe.addData(data, {format: 'magnitude', animated: true});
+              globe.createPoints();
+            }
           document.body.style.backgroundImage = 'none'; // remove loading
         }
       }
