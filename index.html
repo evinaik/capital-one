@@ -112,7 +112,6 @@
               console.log(data[i]);
             }
             window.data = data;
-            globe.resetPoints();
             globe.addData(data, {format: 'magnitude', animated: true});
             globe.createPoints();
             document.body.style.backgroundImage = 'none'; // remove loading
