@@ -108,6 +108,8 @@
             document.body.style.backgroundImage = 'none'; // remove loading
           }
         }
+      globe.createPoints();
+      globe.animate();
       };
       xhr.send(null);
     }
@@ -117,8 +119,6 @@
       var container = document.getElementById('container');
       var globe = new DAT.Globe(container);
       update(globe);
-      globe.createPoints();
-      globe.animate();
     }
 
     </script>

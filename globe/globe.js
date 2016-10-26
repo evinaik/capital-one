@@ -175,7 +175,6 @@
       addPositive(sets[0], sets[1], sets[2]);
     else
       addNegative(sets[0], sets[1], sets[2]);
-    // createPoints();
   }
 
   function resetPoints() {
