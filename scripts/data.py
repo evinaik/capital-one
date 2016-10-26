@@ -32,7 +32,7 @@ class TweetStreamer(TwythonStreamer):
 
     def write(self, lat, lon, size):
         with open('../data/clowns.txt', 'a+') as f:
-            f.write(lat + "," + lon + "," + str(1-1.0/(size+x)) + ",")
+            f.write(lat + "," + lon + "," + str(1-1.0/(1+size)) + ",")
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
