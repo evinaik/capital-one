@@ -3,6 +3,7 @@
 from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
 from senti_classifier import senti_classifier
+import nltk
 
 nltk.data.path.append('./nltk_data/')
 
