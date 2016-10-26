@@ -38,4 +38,4 @@ if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
                              access_token, access_token_secret)
 
-    streamer.statuses.filter(track = 'clown')
+    streamer.statuses.filter(track = 'clown,trump,clinton')
