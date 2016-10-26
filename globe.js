@@ -177,14 +177,14 @@
     } else {
       this._morphTargetId += 1;
     }
-    opts.name = opts.name || 'morphTarget'+this._morphTargetId;
+    var name = 'morphTarget'+this._morphTargetId;
     var subgeo = new THREE.Geometry();
     lat = data[i];
     lng = data[i + 1];
     size = data[i + 2];
     size = size*200;
     addPoint(lat, lng, size, color, subgeo);
-    this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
+    this._baseGeometry.morphTargets.push({'name': name, vertices: subgeo.vertices});
 
   }
 
