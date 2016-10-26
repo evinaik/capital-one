@@ -16,12 +16,12 @@ consumer_secret = 'Pc9zJokOo9ciyDpSpwbicqYQhIySTyzZJ76JY2euByogLXLWPF'
 access_token = '786003535733194752-wFxrt7OD1sCbba0Y3mtLsZcZmHqaRGR'
 access_token_secret = '7tuK1HM0gxe8LrGjJRPMUPFqZjfJif32ekXAemOjMODVP'
 sleepTime = 30
-allData = []
 
 class TweetStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
         super(TweetStreamer, self).__init__(*args, **kwargs)
         self.geo = Nominatim()
+        self.allData = []
     def on_success(self, data):
         if 'geo' in data and data['geo']:
             self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), data['user']['followers_count'], data['text'])
@@ -40,12 +40,12 @@ class TweetStreamer(TwythonStreamer):
     def write(self, lat, lon, size, text):
         with open('../data/clowns.txt', 'w+') as f:
             pos_score, neg_score = senti_classifier.polarity_scores([text])
-            allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.now()])
+            self.allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.now()])
             temp = ''
             curr = datetime.now()
-            while allData.length > 4 and (curr - allData[4]).total_seconds() >= 5:
-                allData = allData[5:]
-            for i in allData:
+            while self.allData.length > 4 and (curr - self.allData[4]).total_seconds() >= 5:
+                self.allData = self.allData[5:]
+            for i in self.allData:
                 temp += str(i) + ","
             f.write(temp)
 
