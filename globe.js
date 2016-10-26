@@ -158,7 +158,7 @@
     }, false);
   }
 
-  function addData(data, positive) {
+  function addData(data, positive, opts) {
     var lat, lng, size, color;
     if (positive)
       color = new THREE.Color(0x66FF00);
@@ -184,11 +184,22 @@
     size = data[2];
     size = size*200;
     addPoint(lat, lng, size, color, subgeo);
+    addPoint(0, 0, 90, color, subgeo);
     this._baseGeometry.morphTargets.push({'name': name, vertices: subgeo.vertices});
+
   }
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
+      if (this._baseGeometry.morphTargets.length < 8) {
+        console.log('t l',this._baseGeometry.morphTargets.length);
+        var padding = 8-this._baseGeometry.morphTargets.length;
+        console.log('padding', padding);
+        for(var i=0; i<=padding; i++) {
+          console.log('padding',i);
+          this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
+        }
+      }
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: THREE.FaceColors,
