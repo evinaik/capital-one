@@ -100,9 +100,9 @@
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = JSON.parse('[' + xhr.responseText.slice(0, -1) + ']');
+            var data = JSON.parse('[["one", [' + xhr.responseText.slice(0, -1) + ']]]');
             window.data = data;
-            globe.addData(data, {format: 'magnitude', name: 'one', animated: true});
+            globe.addData(data[0][1], {format: 'magnitude', name: data[0][0], animated: true});
             globe.createPoints();
             globe.animate();
             document.body.style.backgroundImage = 'none'; // remove loading
