@@ -167,9 +167,9 @@
 
     if (this._baseGeometry === undefined) {
       this._baseGeometry = new THREE.Geometry();
-      lat = data[i];
-      lng = data[i + 1];
-      size = data[i + 2];
+      lat = data[0];
+      lng = data[1];
+      size = data[2];
       addPoint(lat, lng, size, color, this._baseGeometry);
     }
     if(this._morphTargetId === undefined) {
@@ -179,9 +179,9 @@
     }
     var name = 'morphTarget'+this._morphTargetId;
     var subgeo = new THREE.Geometry();
-    lat = data[i];
-    lng = data[i + 1];
-    size = data[i + 2];
+    lat = data[0];
+    lng = data[1];
+    size = data[2];
     size = size*200;
     addPoint(lat, lng, size, color, subgeo);
     this._baseGeometry.morphTargets.push({'name': name, vertices: subgeo.vertices});
