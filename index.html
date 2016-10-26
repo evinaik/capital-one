@@ -107,13 +107,11 @@
               if (data[i] > temp)
                 temp = data[i];
             for (var i = 2; i < data.length; i += 3) {
-              console.log(data[i]);
               data[i] /= temp;
-              console.log(data[i]);
-            }
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
             globe.createPoints();
+            globe.animate();
             document.body.style.backgroundImage = 'none'; // remove loading
           }
         }
