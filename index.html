@@ -95,6 +95,8 @@
   <script type="text/javascript">
 
     function get_json(d) {
+      if (!d)
+        return;
       var lines = d.split("\n");
       d = [];
       for (i = 0; i < lines.length; i++) {
