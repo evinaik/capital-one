@@ -186,11 +186,6 @@
     this._baseGeometry = subgeo;
   }
 
-  function resetPoints() {
-    init();
-    animate();
-  }
-
   function addPoint(lat, lng, size, color, subgeo) {
 
     var phi = (90 - lat) * Math.PI / 180;
