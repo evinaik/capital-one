@@ -104,7 +104,7 @@
             var lines = data.split("\n");
             for (i = 0; i < lines.length; i++) {
               if (lines[i]) {
-                globe.addData(lines[i].split(",").map(parseFloat), false);
+                globe.addData(JSON.stringify(lines[i].split(",").map(parseFloat)), false);
               }
             }
           }
