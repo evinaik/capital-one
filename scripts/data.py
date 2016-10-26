@@ -40,14 +40,16 @@ class TweetStreamer(TwythonStreamer):
             f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + "," + '1' if pos_score >= neg_score + "," else '0')
 
 def call(streamer):
-    try:
-        streamer.statuses.filter(track = 'clown,trump,clinton')
-    except:
-        print 'Sleeping for 60 seconds'
-        for i in xrange(1, 61):
-            sleep(1)
-            print i + '...'
-        call(streamer)
+    # try:
+    #     streamer.statuses.filter(track = 'clown,trump,clinton')
+    # except:
+    #     print 'Sleeping for 60 seconds'
+    #     for i in xrange(1, 61):
+    #         sleep(1)
+    #         print str(i) + '...'
+    #     call(streamer)
+
+    streamer.statuses.filter(track = 'clown,trump,clinton')
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
