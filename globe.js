@@ -14,7 +14,7 @@
  var DAT = DAT || {};
 
  DAT.Globe = function(container) {
-  var imgDir = '/';
+  var imgDir = '';
 
   var Shaders = {
     'earth' : {
