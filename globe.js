@@ -180,11 +180,12 @@ DAT.Globe = function(container) {
         vertexColors: THREE.FaceColors,
         morphTargets: false
       }));
-      if (!(lastObj.get() === 'empty'))
+      if (!(lastObj.get() === 'empty')) {
         scene.remove(lastObj.get());
+        console.log(scene);
+      }
       scene.add(this.points);
       lastObj.set(this.points);
-      console.log(scene);
     }
   }
 
