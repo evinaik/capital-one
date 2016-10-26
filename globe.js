@@ -183,6 +183,7 @@
     lng = data[1];
     size = data[2];
     size = size*200;
+    addPoint(0, 0, 90, color, subgeo);
     addPoint(lat, lng, size, color, subgeo);
     addPoint(0, 0, 90, color, subgeo);
     this._baseGeometry.morphTargets.push({'name': name, vertices: subgeo.vertices});
