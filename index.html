@@ -94,7 +94,7 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe) {
+    function update(globe, container) {
       globe = new DAT.Globe(container);
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
@@ -124,8 +124,7 @@
       Detector.addGetWebGLMessage();
     } else {
       var container = document.getElementById('container');
-      var globe = new DAT.Globe(container);
-      update(globe);
+      update(globe, container);
       document.body.style.backgroundImage = 'none'; // remove loading
     }
 
