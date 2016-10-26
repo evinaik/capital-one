@@ -40,10 +40,10 @@ class TweetStreamer(TwythonStreamer):
     def write(self, lat, lon, size, text):
         with open('../data/clowns.txt', 'w+') as f:
             pos_score, neg_score = senti_classifier.polarity_scores([text])
-            allData.append(lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.now().seconds)
+            allData.append(lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.now())
             temp = ''
-            curr = datetime.now().seconds
-            while curr - allData[4] >= 5:
+            curr = datetime.now()
+            while (curr - allData[4]).total_seconds() >= 5:
                 i = i[5:]
             for i in allData:
                 temp += str(i) + ","
