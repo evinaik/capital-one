@@ -170,6 +170,9 @@
       lat = data[0];
       lng = data[1];
       size = data[2];
+      console.log(lat);
+      console.log(lng);
+      console.log(size);
       addPoint(lat, lng, size, color, this._baseGeometry);
     }
     if(this._morphTargetId === undefined) {
@@ -189,15 +192,6 @@
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
-      if (this._baseGeometry.morphTargets.length < 8) {
-        console.log('t l',this._baseGeometry.morphTargets.length);
-        var padding = 8-this._baseGeometry.morphTargets.length;
-        console.log('padding', padding);
-        for(var i=0; i<=padding; i++) {
-          console.log('padding',i);
-          this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
-        }
-      }
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: THREE.FaceColors,
