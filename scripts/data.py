@@ -32,10 +32,16 @@ class TweetStreamer(TwythonStreamer):
 
     def write(self, lat, lon, size):
         with open('../data/clowns.txt', 'a+') as f:
-            f.write(lat + "," + lon + "," + str(1-1.0/(1+size)) + ",")
+            f.write(lat + "," + lon + "," + str(size/(size+100.0)) + ",")
 
 if __name__ == '__main__':
-    streamer = TweetStreamer(consumer_key, consumer_secret,
-                             access_token, access_token_secret)
+    call()
 
-    streamer.statuses.filter(track = 'clown,trump,clinton')
+def call():
+    try:
+        streamer = TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret)
+
+        streamer.statuses.filter(track = 'clown,trump,clinton')
+    except:
+        call()
