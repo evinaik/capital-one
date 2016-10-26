@@ -158,8 +158,7 @@
     }, false);
   }
 
-  function addData(data, positive, opts) {
-    console.log(data);
+  function addData(data, positive) {
     var lat, lng, size, color;
     if (positive)
       color = new THREE.Color(0x66FF00);
@@ -186,7 +185,6 @@
     size = size*200;
     addPoint(lat, lng, size, color, subgeo);
     this._baseGeometry.morphTargets.push({'name': name, vertices: subgeo.vertices});
-
   }
 
   function createPoints() {
