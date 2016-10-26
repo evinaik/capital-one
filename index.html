@@ -94,17 +94,6 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function LastLength()
-    {
-    }
-
-    LastLength.prototype = new function()
-    {
-      _privateStatic = 0;
-      this.get = function() { return _privateStatic; }
-      this.set = function(x) { _privateStatic = x; }
-    };
-
     function update(globe, container, last) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
@@ -116,6 +105,7 @@
             var data = JSON.parse('[' + data.slice(last.get() + 1).slice(0, -1) + ']');
             last.set(temp);
             window.data = data;
+            console.log(data);
             if (data.length > 0) {
               globe.addData(data, {format: 'magnitude', animated: true});
               globe.createPoints();
@@ -132,7 +122,7 @@
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
     window.globe = globe;
-    var last = new LastLength();
+    var last = new Last();
     update(globe, container, last);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading
