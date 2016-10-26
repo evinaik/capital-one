@@ -96,6 +96,7 @@
 
     function update(globe, container) {
       globe = new DAT.Globe(container);
+      window.globe = globe;
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
