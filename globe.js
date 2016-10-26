@@ -178,7 +178,7 @@
     var subgeo = new THREE.Geometry();
     for (var i = 0; i < sets.length; i += 3) {
       var size = sets[i][2]*200;
-      addPoint(sets[i][1], sets[i][0], size, color, subgeo);
+      addPoint(sets[i][0], sets[i][1], size, color, subgeo);
     }
     this._baseGeometry = subgeo;
   }
