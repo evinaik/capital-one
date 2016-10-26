@@ -35,6 +35,7 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size):
+        return
         # print senti_classifier.polarity_scores(sentences)
         # with open('../data/clowns.txt', 'a+') as f:
             # f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + ",")
