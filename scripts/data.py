@@ -17,22 +17,22 @@ class TweetStreamer(TwythonStreamer):
     def on_success(self, data):
         # print data
         if 'geo' in data and data['geo']:
-            self.write(str(data['geo']['coordinates'][0]) + "," + str(data['geo']['coordinates'][0]) + "," + str(data['user']['followers_count']))
+            self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), + data['user']['followers_count'])
         elif 'user' in data and 'location' in data['user'] and data['user']['location']:
             try:
                 loc = self.geo.geocode(data['user']['location'])
             except:
                 return
             if loc:
-                self.write(str(loc.latitude) + "," + str(loc.longitude) + "," + str(data['user']['followers_count']))
+                self.write(str(loc.latitude), str(loc.longitude), data['user']['followers_count'])
 
     def on_error(self, status_code, data):
         print status_code
         self.disconnect()
 
-    def write(self, data):
+    def write(self, lat, lon, size):
         with open('../data/clowns.txt', 'a+') as f:
-            f.write(data + ",")
+            f.write(lat + "," + lon + "," + str(1-1.0/(size+x)) + ",")
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
