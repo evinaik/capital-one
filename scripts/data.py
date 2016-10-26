@@ -18,7 +18,7 @@ class TweetStreamer(TwythonStreamer):
         super(TweetStreamer, self).__init__(*args, **kwargs)
         self.geo = Nominatim()
     def on_success(self, data):
-        # print data
+        print data
         if 'geo' in data and data['geo']:
             self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), + data['user']['followers_count'])
         elif 'user' in data and 'location' in data['user'] and data['user']['location']:
@@ -27,7 +27,6 @@ class TweetStreamer(TwythonStreamer):
             except:
                 return
             if loc:
-                print data
                 self.write(str(loc.latitude), str(loc.longitude), data['user']['followers_count'])
 
     def on_error(self, status_code, data):
@@ -35,10 +34,8 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size):
-        return
-        # print senti_classifier.polarity_scores(sentences)
-        # with open('../data/clowns.txt', 'a+') as f:
-            # f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + ",")
+        with open('../data/clowns.txt', 'a+') as f:
+            f.write(lat + "," + lon + "," + str(size/(size+5000.0)) + ",")
 
 def call():
     try:
