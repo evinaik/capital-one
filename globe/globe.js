@@ -170,32 +170,20 @@
   }
 
   function addData(sets, positive) {
-    console.log(sets);
+    var color;
     if (positive)
-      addPositive(sets[0], sets[1], sets[2]);
+      color = new THREE.Color(0x66FF00);
     else
-      addNegative(sets[0], sets[1], sets[2]);
+      color = new THREE.Color(0xFF0000);
+    var subgeo = new THREE.Geometry();
+    var size = sets[2]*200;
+    addPoint(sets[0], sets[1], size, color, subgeo);
+    this._baseGeometry = subgeo;
   }
 
   function resetPoints() {
     init();
     animate();
-  }
-
-  function addPositive(lat, lng, size) {
-    var subgeo = new THREE.Geometry();
-    var color = new THREE.Color(0x66FF00);
-    size = size*200;
-    addPoint(lat, lng, size, color, subgeo);
-    this._baseGeometry = subgeo;
-  }
-
-  function addNegative(lat, lng, size) {
-    var subgeo = new THREE.Geometry();
-    var color = new THREE.Color(0xFF0000);
-    var size = size*200;
-    addPoint(lat, lng, size, color, subgeo);
-    this._baseGeometry = subgeo;
   }
 
   function addPoint(lat, lng, size, color, subgeo) {
@@ -352,7 +340,6 @@
   });
 
   this.addData = addData;
-  this.addNegative = addNegative;
   this.createPoints = createPoints;
   this.resetPoints = resetPoints;
   this.renderer = renderer;
