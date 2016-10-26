@@ -182,6 +182,7 @@ DAT.Globe = function(container, opts) {
     }
 
     if (opts.animated) {
+      console.log(data);
       if (this._baseGeometry === undefined) {
         this._baseGeometry = new THREE.Geometry();
         for (i = 0; i < data.length; i += step) {
