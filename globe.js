@@ -14,7 +14,7 @@
  var DAT = DAT || {};
 
  DAT.Globe = function(container) {
-  var imgDir = '';
+  var imgDir = '/';
 
   var Shaders = {
     'earth' : {
@@ -176,10 +176,8 @@
     else
       color = new THREE.Color(0xFF0000);
     var subgeo = new THREE.Geometry();
-    for (var i = 0; i < sets.length; i += 3) {
-      var size = sets[i][2]*200;
-      addPoint(sets[i][0], sets[i][1], size, color, subgeo);
-    }
+    var size = sets[2]*200;
+    addPoint(sets[0], sets[1], size, color, subgeo);
     this._baseGeometry = subgeo;
   }
 
