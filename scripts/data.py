@@ -46,7 +46,7 @@ class TweetStreamer(TwythonStreamer):
             while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 5:
                 self.allData = self.allData[5:]
             for i in self.allData:
-                if not isinstance(i, 'datetime.datetime'):
+                if not isinstance(i, datetime.datetime):
                     temp += str(i) + ","
             f.write(temp)
 
