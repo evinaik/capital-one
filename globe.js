@@ -178,7 +178,7 @@
       lng = data[i + 1];
       size = data[i + 2];
       size *= 1000;
-      if (data[i + 3] === '1')
+      if (data[i + 3] == 1)
       color = new THREE.Color(0x66FF00);
     else
       color = new THREE.Color(0xFF0000);
