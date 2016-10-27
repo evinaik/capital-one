@@ -14,7 +14,7 @@
  var DAT = DAT || {};
 
 
- DAT.Globe = function(container) {
+ DAT.Globe = function(container, opts) {
   opts = opts || {};
   var imgDir = '/';
 
