@@ -53,7 +53,7 @@ class TweetStreamer(TwythonStreamer):
 
 def call(streamer):
     try:
-        if streamer == '':
+        if streamer == 'empty':
             streamer = TweetStreamer(consumer_key, consumer_secret,
                                  access_token, access_token_secret)
         streamer.statuses.filter(track = 'clown,trump,clinton')
@@ -62,7 +62,7 @@ def call(streamer):
         for i in xrange(0, sleepTime, 5):
             sleep(5)
             print str(i + 5) + '...'
-        call('')
+        call('empty')
 
 def wipe():
     while True:
@@ -73,7 +73,7 @@ def wipe():
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
                                  access_token, access_token_secret)
-    p1 = Process(target=call, args=(''))
+    p1 = Process(target=call, args=('empty'))
     p2 = Process(target=wipe)
     p1.start()
     p2.start()
