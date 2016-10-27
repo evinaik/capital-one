@@ -185,8 +185,8 @@
         for (i = 0; i < data.length; i += step) {
           lat = data[i];
           lng = data[i + 1];
-          size = data[i + 2];
-          size *= 1000;
+          size = 0;
+          // size *= 1000;
           color = colorFnWrapper(data,i);
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
