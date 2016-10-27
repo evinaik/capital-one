@@ -111,9 +111,9 @@
   </div>
 
   <div id="currentInfo">
-    <span id="clinton" class="word">Clinton</span>
-    <span id="trump" class="word">Trump</span>
-    <span id="clowns" class="word">Clowns</span>
+    <span id="wordclinton" class="word">Clinton</span>
+    <span id="wordtrump" class="word">Trump</span>
+    <span id="wordclowns" class="word">Clowns</span>
   </div>
 
   <div id="title">
@@ -129,14 +129,24 @@
   <script type="text/javascript" src="third-party/Tween.js"></script>
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
+    function IndexHold()
+    {
+    }
 
-    function update(globe, container, index) {
+    IndexHold.prototype = new function()
+    {
+      _privateStatic = 0;
+      this.get = function() { return _privateStatic; }
+      this.set = function(x) { _privateStatic = x; }
+    };
+    var ind = new IndexHold();
+    function update(globe, container) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/data.txt', true);
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = xhr.responseText.split("\n")[index]
+            var data = xhr.responseText.split("\n")[ind.get()];
             data = JSON.parse(JSON.stringify(data.slice(0, -1).split(',').map(parseFloat)));
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
@@ -146,6 +156,11 @@
       }
     };
     xhr.send(null);
+  }
+  var words = ['clinton', 'trump', 'clowns'];
+  for(var i = 0; i<words.length; i++) {
+    var y = document.getElementById('word'+words[i]);
+    y.addEventListener('mouseover', ind.set(i), false);
   }
   if(!Detector.webgl){
     Detector.addGetWebGLMessage();
