@@ -60,7 +60,7 @@ class TweetStreamer(TwythonStreamer):
 
     def sendToFile(self):
         curr = datetime.datetime.now()
-        temp = [[]]
+        temp = [[], [], []]
         temp[0].append('clinton')
         temp[0].append([])
         while len(self.clintonData) > 4 and (curr - self.clintonData[4]).total_seconds() >= 600:
@@ -69,16 +69,16 @@ class TweetStreamer(TwythonStreamer):
             if not isinstance(i, datetime.datetime):
                 temp[0][1].append(i)
 
-        temp[0].append('clinton')
-        temp[0].append([])
+        temp[1].append('trump')
+        temp[1].append([])
         while len(self.trumpData) > 4 and (curr - self.trumpData[4]).total_seconds() >= 600:
             self.trumpData = self.trumpData[5:]
         for i in self.trumpData:
             if not isinstance(i, datetime.datetime):
                 temp[1][1].append(i)
 
-        temp[0].append('clinton')
-        temp[0].append([])
+        temp[2].append('clowns')
+        temp[2].append([])
         while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
             self.clownData = self.clownData[5:]
         for i in self.clownData:
