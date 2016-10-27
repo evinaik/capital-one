@@ -240,12 +240,9 @@
           if (xhr.status === 200) {
             var data = xhr.responseText;
             var temp = [];
-            for (var i = 0; i < word.length; i++) {
+            for (var i = 0; i < words.length; i++) {
               var d = data[i].slice(0, -1).split(',').map(parseFloat);
-              if (d.length > 0)
-                temp.push([word[i], d]);
-              else
-                temp.push([word[1], [0, 0, 0]])
+                temp.push([words[i], d]);
             }
             data = JSON.parse(JSON.stringify(temp));
             window.data = data;
