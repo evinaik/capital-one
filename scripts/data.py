@@ -58,6 +58,13 @@ class TweetStreamer(TwythonStreamer):
             self.clownData.extend(temp)
 
     def sendToFile(self):
+        curr = datetime.datetime.now()
+        temp = ''
+        while len(self.clintonData) > 4 and (curr - self.clintonData[4]).total_seconds() >= 600:
+            self.clintonData = self.clintonData[5:]
+        for i in self.clintonData:
+            if not isinstance(i, datetime.datetime):
+                temp += str(i) + ","
 
         temp += "\n"
 
@@ -69,8 +76,6 @@ class TweetStreamer(TwythonStreamer):
 
         temp += "\n"
 
-        curr = datetime.datetime.now()
-        temp = ''
         while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
             self.clownData = self.clownData[5:]
         for i in self.clownData:
@@ -80,16 +85,16 @@ class TweetStreamer(TwythonStreamer):
         return temp
 
 def call(streamer):
-    # try:
-    streamer.statuses.filter(track = 'clown,trump,clinton, donald trump, hillary clinton')
-    # except:
-    #     print e
-    #     print 'Sleeping for ' + str(sleepTime) + ' seconds'
-    #     for i in xrange(0, sleepTime, 5):
-    #         sleep(5)
-    #         print str(i + 5) + '...'
-    #     call(TweetStreamer(consumer_key, consumer_secret,
-    #                              access_token, access_token_secret))
+    try:
+        streamer.statuses.filter(track = 'clown,trump,clinton, donald trump, hillary clinton')
+    except:
+        print e
+        print 'Sleeping for ' + str(sleepTime) + ' seconds'
+        for i in xrange(0, sleepTime, 5):
+            sleep(5)
+            print str(i + 5) + '...'
+        call(TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret))
     # streamer.statuses.filter(track = 'clown,trump,clinton')
 
 if __name__ == '__main__':
