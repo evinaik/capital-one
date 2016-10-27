@@ -24,7 +24,7 @@ class TweetStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
         super(TweetStreamer, self).__init__(*args, **kwargs)
         self.geo = Nominatim()
-        print allData
+        print self.allData
     def on_success(self, data):
         if 'geo' in data and data['geo']:
             self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), data['user']['followers_count'], data['text'])
