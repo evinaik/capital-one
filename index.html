@@ -161,10 +161,10 @@
   }
   var words = ['clinton', 'trump', 'clowns'];
   for(var i = 0; i<words.length; i++) {
-    (function(i) {
-      var y = document.getElementById('word'+words[i]);
-      y.addEventListener('mouseover', function() { ind.set(i); }, false);
-    }());
+    (function(j) {
+      var y = document.getElementById('word'+words[j]);
+      y.addEventListener('mouseover', function() { ind.set(j); }, false);
+    }(i));
   }
   if(!Detector.webgl){
     Detector.addGetWebGLMessage();
