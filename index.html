@@ -160,7 +160,6 @@
     window.globe = globe;
     var setWord = function(globe, t) {
       return function() {
-        console.log('setting');
         new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
         var y = document.getElementById(ids[t]);
         if (y.getAttribute('class') === 'word active') {
@@ -177,6 +176,7 @@
       var y = document.getElementById(ids[i]);
       y.addEventListener('mouseover', setWord(globe,i), false);
     }
+    TWEEN.start();
     update(globe, container);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading
