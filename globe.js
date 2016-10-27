@@ -13,20 +13,6 @@
 
  var DAT = DAT || {};
 
- function Last()
- {
- }
-
- Last.prototype = new function()
- {
-  _privateStatic = 0;
-  this.get = function() { return _privateStatic; }
-  this.set = function(x) { _privateStatic = x; }
-};
-
-var lastObj = new Last();
-lastObj.set('empty');
-
 
 DAT.Globe = function(container) {
   var imgDir = '/';
