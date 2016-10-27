@@ -182,7 +182,7 @@ DAT.Globe = function(container) {
         vertexColors: THREE.FaceColors,
         morphTargets: false
       }));
-      setTimeout(function() { resetPoints(); }, 3000);
+      setTimeout(resetPoints, 3000);
       scene.add(this.points);
     }
   }
