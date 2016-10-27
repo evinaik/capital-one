@@ -18,10 +18,13 @@ access_token_secret = '7tuK1HM0gxe8LrGjJRPMUPFqZjfJif32ekXAemOjMODVP'
 sleepTime = 30
 
 class TweetStreamer(TwythonStreamer):
+
+    allData = []
+
     def __init__(self, *args, **kwargs):
         super(TweetStreamer, self).__init__(*args, **kwargs)
         self.geo = Nominatim()
-        self.allData = []
+        print allData
     def on_success(self, data):
         if 'geo' in data and data['geo']:
             self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), data['user']['followers_count'], data['text'])
@@ -43,7 +46,6 @@ class TweetStreamer(TwythonStreamer):
         temp = ''
         curr = datetime.datetime.now()
         while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 600:
-            print allData;
             self.allData = self.allData[5:]
         for i in self.allData:
             if not isinstance(i, datetime.datetime):
@@ -53,8 +55,6 @@ class TweetStreamer(TwythonStreamer):
 
 def call(streamer):
     try:
-        streamer = TweetStreamer(consumer_key, consumer_secret,
-                                 access_token, access_token_secret)
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
