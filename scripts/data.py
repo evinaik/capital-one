@@ -44,7 +44,6 @@ class TweetStreamer(TwythonStreamer):
         pos_score, neg_score = senti_classifier.polarity_scores([text])
         self.allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()])
         temp = ''
-        curr = datetime.datetime.now()
         for i in self.allData:
             if not isinstance(i, datetime.datetime):
                 temp += str(i) + ","
@@ -66,6 +65,7 @@ def call(streamer):
 
 def wipe():
     while True:
+        curr = datetime.datetime.now()
         while len(TweetStreamer.allData) > 4 and (curr - TweetStreamer.allData[4]).total_seconds() >= 3:
             TweetStreamer.allData = TweetStreamer.allData[5:]
         sleep(1)
