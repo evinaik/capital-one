@@ -177,7 +177,7 @@ DAT.Globe = function(container) {
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
-      setTimeout(resetPoints, 3000);
+      setTimeout(function() { this.resetPoints(); }, 3000);
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: THREE.FaceColors,
