@@ -130,13 +130,13 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe, container) {
+    function update(globe, container, index) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/data.txt', true);
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = xhr.responseText.split("\n")[1]
+            var data = xhr.responseText.split("\n")[index]
             data = JSON.parse(JSON.stringify(data.slice(0, -1).split(',').map(parseFloat)));
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
@@ -153,7 +153,7 @@
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
     window.globe = globe;
-    update(globe, container);
+    update(globe, container, 0);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading
     window.setInterval(function(){
