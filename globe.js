@@ -177,6 +177,7 @@ DAT.Globe = function(container) {
   }
 
   function addData(data) {
+    resetPoints();
     point = new THREE.Mesh(geometry);
     var color;
     var subgeo = new THREE.Geometry();
