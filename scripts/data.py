@@ -68,6 +68,7 @@ def wipe():
         curr = datetime.datetime.now()
         while len(TweetStreamer.allData) > 4 and (curr - TweetStreamer.allData[4]).total_seconds() >= 3:
             TweetStreamer.allData = TweetStreamer.allData[5:]
+            print curr
         sleep(1)
 
 if __name__ == '__main__':
