@@ -140,8 +140,7 @@
             var temp = [];
             for (var i = 0; i < ids.length; i++)
               temp.push(ids[i], data[i].slice(0, -1).split(',').map(parseFloat));
-            console.log(JSON.stringify(temp));
-            data = JSON.parse(temp.slice(0, -1));
+            data = JSON.parse(JSON.stringify(temp));
             window.data = data;
             for (var i=0;i<data.length;i++)
               globe.addData(data[i][1], {name: data[i][0]});
