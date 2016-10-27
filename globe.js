@@ -177,7 +177,7 @@ DAT.Globe = function(container) {
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
-      setTimeout( function() { scene.remove(this.points); }, 3000);
+      setTimeout(resetPoints, 3000);
       this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
         color: 0xffffff,
         vertexColors: THREE.FaceColors,
@@ -185,6 +185,10 @@ DAT.Globe = function(container) {
       }));
       scene.add(this.points);
     }
+  }
+
+  function resetPoints() {
+    scene.remove(this.points);
   }
 
   function addData(data) {
@@ -360,6 +364,7 @@ DAT.Globe = function(container) {
 
   this.addData = addData;
   this.createPoints = createPoints;
+  this.resetPoints = resetPoints;
   this.renderer = renderer;
   this.scene = scene;
 
