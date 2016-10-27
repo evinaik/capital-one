@@ -181,6 +181,7 @@
     resetPoints();
     if (this._baseGeometry === undefined)
       this._baseGeometry = new THREE.Geometry();
+    console.log(data);
     point = new THREE.Mesh(geometry);
     var color;
     var subgeo = new THREE.Geometry();
