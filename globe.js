@@ -182,7 +182,6 @@ DAT.Globe = function(container) {
         vertexColors: THREE.FaceColors,
         morphTargets: false
       }));
-      setTimeout(resetPoints, 3000);
       scene.add(this.points);
     }
   }
@@ -192,7 +191,7 @@ DAT.Globe = function(container) {
   }
 
   function addData(data) {
-    point = new THREE.Mesh(geometry);
+    this.point = new THREE.Mesh(geometry);
     var color;
     var subgeo = new THREE.Geometry();
     for (i = 0; i < data.length; i += 4) {
