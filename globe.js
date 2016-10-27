@@ -173,10 +173,10 @@
   }
 
   function resetPoints() {
-    while (scene.children.length > 2) {
-     obj = scene.children[3];
-     scene.remove(obj);
-   }
+    // while (scene.children.length > 2) {
+     // obj = scene.children[3];
+     scene.remove(this.points);
+   // }
  }
 
  function addData(data) {
