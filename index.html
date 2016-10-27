@@ -140,12 +140,10 @@
             var temp = '[';
             for (var i = 0; i < ids.length; i++)
               temp += '["' + ids[i] + '",[' + JSON.stringify(data[i].slice(0, -1).split(',').map(parseFloat)) + ']],';
-            temp = temp.slice(0, -1) + ']';
-            data = JSON.parse(temp);
+            data = JSON.parse(temp.slice(0, -1) + ']');
             window.data = data;
-            for (var i=0;i<data.length;i++) {
+            for (var i=0;i<data.length;i++)
               globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
-            }
             globe.createPoints();
           document.body.style.backgroundImage = 'none'; // remove loading
         }
@@ -162,6 +160,7 @@
     window.globe = globe;
     var setWord = function(globe, t) {
       return function() {
+        console.log('setting');
         new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
         var y = document.getElementById(ids[t]);
         if (y.getAttribute('class') === 'word active') {
