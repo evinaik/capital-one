@@ -82,7 +82,7 @@ class TweetStreamer(TwythonStreamer):
             if not isinstance(i, datetime.datetime):
                 temp += str(i) + ","
 
-        print clownData, trumpData, clintonData
+        print self.clownData, self.trumpData, self.clintonData
 
         return temp
 
