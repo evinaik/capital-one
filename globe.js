@@ -182,7 +182,7 @@
   point = new THREE.Mesh(geometry);
   var color;
   var subgeo = new THREE.Geometry();
-  for (i = 0; data.length > 3 && i < data.length; i += 4) {
+  for (i = 0; i < data.length; i += 4) {
     lat = data[i];
     lng = data[i + 1];
     size = data[i + 2];

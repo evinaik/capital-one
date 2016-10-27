@@ -103,6 +103,7 @@
             var data = xhr.responseText
             data = JSON.parse('[' + data.slice(0, -1) + ']');
             window.data = data;
+            console.log(data);
             if (data.length > 0) {
               globe.addData(data, {format: 'magnitude', animated: true});
               globe.createPoints();
