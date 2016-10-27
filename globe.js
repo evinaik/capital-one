@@ -172,7 +172,6 @@
     this.is_animated = opts.animated;
     opts.format = opts.format || 'magnitude'; // other option is 'legend'
     step = 4;
-    console.log(data);
     colorFnWrapper = function(data, i) {
       if (data[i + 3] == 1)
         return new THREE.Color(0x66FF00);
@@ -187,7 +186,7 @@
           lat = data[i];
           lng = data[i + 1];
           size = data[i + 2];
-          size *= 10000;
+          size *= 1000;
           color = colorFnWrapper(data,i);
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
@@ -201,11 +200,12 @@
     }
     var subgeo = new THREE.Geometry();
     for (i = 0; i < data.length; i += step) {
+      console.log(lat);
       lat = data[i];
       lng = data[i + 1];
       color = colorFnWrapper(data,i);
       size = data[i + 2];
-      size *= 10000;
+      size *= 1000;
       addPoint(lat, lng, size, color, subgeo);
     }
     if (opts.animated) {
