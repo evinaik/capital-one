@@ -163,7 +163,7 @@
   for(var i = 0; i<words.length; i++) {
     (function(j) {
       var y = document.getElementById('word'+words[j]);
-      y.addEventListener('mouseover', function() { ind.set(j); update(globe, container); }, false);
+      y.addEventListener('mouseover', function() { ind.set(j); update(globe, container); y.setAttribute('class', 'year active'); }, false);
     }(i));
   }
   if(!Detector.webgl){
