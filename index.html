@@ -137,14 +137,15 @@
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             var data = xhr.responseText.split("\n")
-            // data = '[["clinton",[' + data[0].slice(0, -1) + ']],["trump",[' + data[1].slice(0, -1) + ']],["clowns",[' + data[2].slice(0, -1) + ']]]';
             var temp = '[';
             for (var i = 0; i < ids.length; i++)
               temp += '["' + ids[i] + '",[' + JSON.stringify(data[0].slice(0, -1).split(',').map(parseFloat)) + ']],';
             temp = temp.slice(0, -1) + ']';
             data = JSON.parse(temp);
             window.data = data;
-            globe.addData(data, {format: 'magnitude', animated: true});
+            for (i=0;i<data.length;i++) {
+              globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
+            }
             globe.createPoints();
           document.body.style.backgroundImage = 'none'; // remove loading
         }
