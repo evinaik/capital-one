@@ -82,7 +82,8 @@ class TweetStreamer(TwythonStreamer):
 def call(streamer):
     try:
         streamer.statuses.filter(track = 'clown,trump,clinton, donald trump, hillary clinton')
-    except:
+    except e:
+        print e
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
         for i in xrange(0, sleepTime, 5):
             sleep(5)
