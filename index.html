@@ -139,8 +139,7 @@
             var data = xhr.responseText.split("\n")
             var temp = [];
             for (var i = 0; i < ids.length; i++)
-              temp.push(ids[i], data[i].slice(0, -1).split(',').map(parseFloat));
-            temp = [temp];
+              temp.push([ids[i], data[i].slice(0, -1).split(',').map(parseFloat)]);
             data = JSON.parse(JSON.stringify(temp));
             window.data = data;
             for (var i=0;i<data.length;i++)
