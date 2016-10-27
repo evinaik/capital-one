@@ -15,7 +15,7 @@ consumer_key = 'wOq8bUAoKkgDTC0XHOQvU0eY1'
 consumer_secret = 'Pc9zJokOo9ciyDpSpwbicqYQhIySTyzZJ76JY2euByogLXLWPF'
 access_token = '786003535733194752-wFxrt7OD1sCbba0Y3mtLsZcZmHqaRGR'
 access_token_secret = '7tuK1HM0gxe8LrGjJRPMUPFqZjfJif32ekXAemOjMODVP'
-sleepTime = 30
+sleepTime = 5
 
 class TweetStreamer(TwythonStreamer):
 
@@ -61,7 +61,7 @@ def call(streamer):
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
         for i in xrange(0, sleepTime, 5):
             sleep(5)
-            print str(i + 1) + '...'
+            print str(i + 5) + '...'
         call(streamer)
 
 if __name__ == '__main__':
