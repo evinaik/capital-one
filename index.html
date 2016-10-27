@@ -105,13 +105,13 @@
             window.data = data;
             if (data.length > 0) {
               globe.addData(data, {format: 'magnitude', animated: true});
-              globe.createPoints();
             }
           document.body.style.backgroundImage = 'none'; // remove loading
         }
       }
     };
     xhr.send(null);
+    globe.createPoints();
   }
   if(!Detector.webgl){
     Detector.addGetWebGLMessage();
