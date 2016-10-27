@@ -42,7 +42,7 @@ class TweetStreamer(TwythonStreamer):
         self.allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()])
         temp = ''
         curr = datetime.datetime.now()
-        while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 600:
+        while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 5:
             self.allData = self.allData[5:]
         for i in self.allData:
             if not isinstance(i, datetime.datetime):
