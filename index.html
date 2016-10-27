@@ -19,6 +19,18 @@
       height: 100%;
     }
 
+    #currentInfo {
+      width: 270px;
+      position: absolute;
+      left: 20px;
+      top: 63px;
+
+      background-color: rgba(0,0,0,0.2);
+
+      border-top: 1px solid rgba(255,255,255,0.4);
+      padding: 10px;
+    }
+
     #info {
 
       font-size: 11px;
@@ -55,6 +67,24 @@
       padding: 10px;
     }
 
+    .word {
+      font: 16px Georgia;
+      line-height: 26px;
+      height: 30px;
+      text-align: center;
+      float: left;
+      width: 90px;
+      color: rgba(255, 255, 255, 0.4);
+
+      cursor: pointer;
+      -webkit-transition: all 0.1s ease-out;
+    }
+
+    .word:hover, .word.active {
+      font-size: 23px;
+      color: #fff;
+    }
+
     #ce span {
       display: none;
     }
@@ -78,6 +108,12 @@
 
   <div id="info">
     <strong><a href="http://www.chromeexperiments.com">WebGL Globe</a></strong> <span class="bull">&bull;</span> Created by the Google Data Arts Team <span class="bull">&bull;</span> Data acquired from <a href="https://www.ngdc.noaa.gov/nndc/struts/results?type_0=Exact&query_0=$HAZ_EVENT_ID&t=102557&s=50&d=54&dfn=volerup.txt">NOAA</a>
+  </div>
+
+  <div id="currentInfo">
+    <span id="clinton" class="word">Hillary Clinton</span>
+    <span id="trump" class="word">Donald Trump</span>
+    <span id="clowns" class="word">Clown</span>
   </div>
 
   <div id="title">
