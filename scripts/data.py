@@ -80,16 +80,16 @@ class TweetStreamer(TwythonStreamer):
         return temp
 
 def call(streamer):
-    try:
-        streamer.statuses.filter(track = 'clown,trump,clinton, donald trump, hillary clinton')
-    except e:
-        print e
-        print 'Sleeping for ' + str(sleepTime) + ' seconds'
-        for i in xrange(0, sleepTime, 5):
-            sleep(5)
-            print str(i + 5) + '...'
-        call(TweetStreamer(consumer_key, consumer_secret,
-                                 access_token, access_token_secret))
+    # try:
+    streamer.statuses.filter(track = 'clown,trump,clinton, donald trump, hillary clinton')
+    # except:
+    #     print e
+    #     print 'Sleeping for ' + str(sleepTime) + ' seconds'
+    #     for i in xrange(0, sleepTime, 5):
+    #         sleep(5)
+    #         print str(i + 5) + '...'
+    #     call(TweetStreamer(consumer_key, consumer_secret,
+    #                              access_token, access_token_secret))
     # streamer.statuses.filter(track = 'clown,trump,clinton')
 
 if __name__ == '__main__':
