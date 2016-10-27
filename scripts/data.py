@@ -24,7 +24,6 @@ class TweetStreamer(TwythonStreamer):
     def __init__(self, *args, **kwargs):
         super(TweetStreamer, self).__init__(*args, **kwargs)
         self.geo = Nominatim()
-        print self.allData
     def on_success(self, data):
         if 'geo' in data and data['geo']:
             self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), data['user']['followers_count'], data['text'])
@@ -55,6 +54,8 @@ class TweetStreamer(TwythonStreamer):
 
 def call(streamer):
     try:
+        streamer = TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret)
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
