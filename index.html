@@ -140,6 +140,7 @@
       this.set = function(x) { _privateStatic = x; }
     };
     var ind = new IndexHold();
+    window.ind = ind;
     function update(globe, container) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/data.txt', true);
