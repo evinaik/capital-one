@@ -58,6 +58,7 @@ def call(streamer):
                                  access_token, access_token_secret)
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
+        print TweetStreamer.allData
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
         for i in xrange(0, sleepTime, 5):
             sleep(5)
