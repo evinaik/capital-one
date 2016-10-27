@@ -14,7 +14,7 @@
  var DAT = DAT || {};
 
 
-DAT.Globe = function(container) {
+ DAT.Globe = function(container) {
   var imgDir = '/';
 
   var Shaders = {
@@ -173,38 +173,42 @@ DAT.Globe = function(container) {
   }
 
   function resetPoints() {
-    scene.remove(this.points);
+    var i;
+    for(i = scene.children.length - 1; i >= 0; i--){
+     obj = scene.children[i];
+     scene.remove(obj);
+   }
+ }
+
+ function addData(data) {
+  resetPoints();
+  point = new THREE.Mesh(geometry);
+  var color;
+  var subgeo = new THREE.Geometry();
+  for (i = 0; i < data.length; i += 4) {
+    lat = data[i];
+    lng = data[i + 1];
+    size = data[i + 2];
+    size *= 1000;
+    if (data[i + 3] == 1)
+      color = new THREE.Color(0x66FF00);
+    else
+      color = new THREE.Color(0xFF0000);
+    addPoint(lat, lng, size, color, subgeo);
   }
+  this._baseGeometry = subgeo;
+}
 
-  function addData(data) {
-    resetPoints();
-    point = new THREE.Mesh(geometry);
-    var color;
-    var subgeo = new THREE.Geometry();
-    for (i = 0; i < data.length; i += 4) {
-      lat = data[i];
-      lng = data[i + 1];
-      size = data[i + 2];
-      size *= 1000;
-      if (data[i + 3] == 1)
-        color = new THREE.Color(0x66FF00);
-      else
-        color = new THREE.Color(0xFF0000);
-      addPoint(lat, lng, size, color, subgeo);
-    }
-    this._baseGeometry = subgeo;
-  }
+function addPoint(lat, lng, size, color, subgeo) {
 
-  function addPoint(lat, lng, size, color, subgeo) {
+  var phi = (90 - lat) * Math.PI / 180;
+  var theta = (180 - lng) * Math.PI / 180;
 
-    var phi = (90 - lat) * Math.PI / 180;
-    var theta = (180 - lng) * Math.PI / 180;
+  point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
+  point.position.y = 200 * Math.cos(phi);
+  point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
 
-    point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
-    point.position.y = 200 * Math.cos(phi);
-    point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
-
-    point.lookAt(mesh.position);
+  point.lookAt(mesh.position);
 
     point.scale.z = Math.max( size, 0.1 ); // avoid non-invertible matrix
     point.updateMatrix();
