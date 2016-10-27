@@ -178,7 +178,7 @@
   }
 
   function addData(data, opts) {
-    resetPoints();
+    // resetPoints();
     if (this._baseGeometry === undefined)
       this._baseGeometry = new THREE.Geometry();
     point = new THREE.Mesh(geometry);
