@@ -137,7 +137,7 @@
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             var data = xhr.responseText.split("\n")
-            data = "[['clinton',[" + data[0] + "]],['trump',[" + data[1] + "]],['clowns,[" + data[2] + "]]];";
+            data = '[["clinton",[' + data[0] + ']],["trump",[' + data[1] + ']],["clowns",[' + data[2] + ']]]';
             data = JSON.parse('[' + data.slice(0, -1) + ']');
             console.log(data);
             window.data = data;
