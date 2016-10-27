@@ -183,9 +183,11 @@
       var y = document.getElementById(ids[i]);
       y.addEventListener('mouseover', setWord(globe,i), false);
     }
+
+    TWEEN.start();
+
     update(globe, container);
     globe.animate();
-    TWEEN.start();
     setWord(globe, 0);
     document.body.style.backgroundImage = 'none'; // remove loading
     window.setInterval(function(){
