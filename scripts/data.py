@@ -42,8 +42,7 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size, text):
-        temp = (lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now())
-        pos_score, neg_score = senti_classifier.polarity_scores([text])
+        temp = (lat, lon, size/(size+5000.0), text, datetime.datetime.now())
         sendToList(temp, ['clown' in text.lower(), 'trump' in text.lower(), 'clinton' in text.lower()])
         temp = sendToFile()
         with open('../data/data.txt', 'w+') as f:
