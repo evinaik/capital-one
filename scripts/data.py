@@ -42,7 +42,7 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size, text):
-        self.sendToList(lat, lon, size, text, ['clown' in text.lower(), 'trump' in text.lower(), 'clinton' in text.lower()])
+        self.sendToList(lat, lon, size, text, ['clown' in text.lower(), 'trump' in text.lower() or 'donald' in text.lower(), 'clinton' in text.lower() or 'hillary' in text.lower()])
         temp = self.sendToFile()
         with open('../data/data.txt', 'w+') as f:
             f.write(temp)
@@ -81,7 +81,7 @@ class TweetStreamer(TwythonStreamer):
 
 def call(streamer):
     try:
-        streamer.statuses.filter(track = 'clown,trump,clinton')
+        streamer.statuses.filter(track = 'clown,trump,clinton, donald trump, hillary clinton')
     except:
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
         for i in xrange(0, sleepTime, 5):
