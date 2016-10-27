@@ -137,7 +137,7 @@
     {
       _privateStatic = 0;
       this.get = function() { return _privateStatic; }
-      this.set = function(x) { _privateStatic = x; }
+      this.set = function(z) { _privateStatic = z; }
     };
     var ind = new IndexHold();
     window.ind = ind;
@@ -162,6 +162,7 @@
   var words = ['clinton', 'trump', 'clowns'];
   for(var i = 0; i<words.length; i++) {
     var y = document.getElementById('word'+words[i]);
+    console.log(i);
     y.addEventListener('mouseover', function() { ind.set(i); }, false);
   }
   if(!Detector.webgl){
