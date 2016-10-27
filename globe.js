@@ -172,6 +172,7 @@
     this.is_animated = opts.animated;
     opts.format = opts.format || 'magnitude'; // other option is 'legend'
     step = 4;
+    console.log(data);
     colorFnWrapper = function(data, i) {
       if (data[i + 3] == 1)
         return new THREE.Color(0x66FF00);
@@ -185,74 +186,74 @@
         for (i = 0; i < data.length; i += step) {
           lat = data[i];
           lng = data[i + 1];
-       size = data[i + 2];
-color = colorFnWrapper(data,i);
-size = 0;
-addPoint(lat, lng, size, color, this._baseGeometry);
-}
-}
-if(this._morphTargetId === undefined) {
-  this._morphTargetId = 0;
-} else {
-  this._morphTargetId += 1;
-}
-opts.name = opts.name || 'morphTarget'+this._morphTargetId;
-}
-var subgeo = new THREE.Geometry();
-for (i = 0; i < data.length; i += step) {
-  lat = data[i];
-  lng = data[i + 1];
-  color = colorFnWrapper(data,i);
-  size = data[i + 2];
-  size = size*200;
-  addPoint(lat, lng, size, color, subgeo);
-}
-if (opts.animated) {
-  this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
-} else {
-  this._baseGeometry = subgeo;
-}
-
-};
-
-function createPoints() {
-  if (this._baseGeometry !== undefined) {
-    if (this.is_animated === false) {
-      this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        vertexColors: THREE.FaceColors,
-        morphTargets: false
-      }));
-    } else {
-      if (this._baseGeometry.morphTargets.length < 8) {
-        console.log('t l',this._baseGeometry.morphTargets.length);
-        var padding = 8-this._baseGeometry.morphTargets.length;
-        console.log('padding', padding);
-        for(var i=0; i<=padding; i++) {
-          console.log('padding',i);
-          this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
+          size = data[i + 2];
+          color = colorFnWrapper(data,i);
+          size = 0;
+          addPoint(lat, lng, size, color, this._baseGeometry);
         }
       }
-      this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-        color: 0xffffff,
-        vertexColors: THREE.FaceColors,
-        morphTargets: true
-      }));
+      if(this._morphTargetId === undefined) {
+        this._morphTargetId = 0;
+      } else {
+        this._morphTargetId += 1;
+      }
+      opts.name = opts.name || 'morphTarget'+this._morphTargetId;
     }
-    scene.add(this.points);
+    var subgeo = new THREE.Geometry();
+    for (i = 0; i < data.length; i += step) {
+      lat = data[i];
+      lng = data[i + 1];
+      color = colorFnWrapper(data,i);
+      size = data[i + 2];
+      size = size*200;
+      addPoint(lat, lng, size, color, subgeo);
+    }
+    if (opts.animated) {
+      this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
+    } else {
+      this._baseGeometry = subgeo;
+    }
+
+  };
+
+  function createPoints() {
+    if (this._baseGeometry !== undefined) {
+      if (this.is_animated === false) {
+        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          vertexColors: THREE.FaceColors,
+          morphTargets: false
+        }));
+      } else {
+        if (this._baseGeometry.morphTargets.length < 8) {
+          console.log('t l',this._baseGeometry.morphTargets.length);
+          var padding = 8-this._baseGeometry.morphTargets.length;
+          console.log('padding', padding);
+          for(var i=0; i<=padding; i++) {
+            console.log('padding',i);
+            this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
+          }
+        }
+        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
+          color: 0xffffff,
+          vertexColors: THREE.FaceColors,
+          morphTargets: true
+        }));
+      }
+      scene.add(this.points);
+    }
   }
-}
 
-function addPoint(lat, lng, size, color, subgeo) {
+  function addPoint(lat, lng, size, color, subgeo) {
 
-  var phi = (90 - lat) * Math.PI / 180;
-  var theta = (180 - lng) * Math.PI / 180;
+    var phi = (90 - lat) * Math.PI / 180;
+    var theta = (180 - lng) * Math.PI / 180;
 
-  point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
-  point.position.y = 200 * Math.cos(phi);
-  point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
+    point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
+    point.position.y = 200 * Math.cos(phi);
+    point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
 
-  point.lookAt(mesh.position);
+    point.lookAt(mesh.position);
 
     point.scale.z = Math.max( size, 0.1 ); // avoid non-invertible matrix
     point.updateMatrix();
