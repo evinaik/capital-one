@@ -51,11 +51,11 @@ class TweetStreamer(TwythonStreamer):
         pos_score, neg_score = senti_classifier.polarity_scores([text])
         temp = [lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()]
         if word[0]:
-            clownData.extend(temp)
+            self.clownData.extend(temp)
         if word[1]:
-            trumpData.extend(temp)
+            self.trumpData.extend(temp)
         if word[2]:
-            trumpData.extend(temp)
+            self.trumpData.extend(temp)
 
     def sendToFile():
         curr = datetime.datetime.now()
