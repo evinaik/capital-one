@@ -94,7 +94,7 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe, container, last) {
+    function update(globe, container) {
       var xhr = new XMLHttpRequest();
       xhr.open('GET', 'data/clowns.txt', true);
       xhr.onreadystatechange = function(e) {
@@ -120,8 +120,7 @@
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
     window.globe = globe;
-    var last = new Last();
-    update(globe, container, last);
+    update(globe, container);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading
   }
