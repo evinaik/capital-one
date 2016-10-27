@@ -138,8 +138,13 @@
           if (xhr.status === 200) {
             var data = xhr.responseText.split("\n")
             var temp = [];
-            for (var i = 0; i < ids.length; i++)
-              temp.push([ids[i], data[i].slice(0, -1).split(',').map(parseFloat)]);
+            for (var i = 0; i < ids.length; i++) {
+              var d = data[i].slice(0, -1).split(',').map(parseFloat);
+              if (d.length > 0)
+                temp.push([ids[i], d]);
+              else
+                temp.push([ids[1], [0, 0, 0]])
+            }
             data = JSON.parse(JSON.stringify(temp));
             window.data = data;
             for (var i=0;i<data.length;i++)
@@ -158,6 +163,7 @@
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
     window.globe = globe;
+
     var setWord = function(globe, t) {
       return function() {
         new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
@@ -172,6 +178,7 @@
         y.setAttribute('class', 'word active');
       };
     };
+
     for(var i = 0; i<ids.length; i++) {
       var y = document.getElementById(ids[i]);
       y.addEventListener('mouseover', setWord(globe,i), false);
