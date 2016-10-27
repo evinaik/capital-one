@@ -73,7 +73,7 @@ def wipe():
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
                                  access_token, access_token_secret)
-    p1 = Process(target=call, args='')
+    p1 = Process(target=call, args=(''))
     p2 = Process(target=wipe)
     p1.start()
     p2.start()
