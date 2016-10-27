@@ -138,7 +138,7 @@
           if (xhr.status === 200) {
             var data = xhr.responseText.split("\n")
             // data = '[["clinton",[' + data[0].slice(0, -1) + ']],["trump",[' + data[1].slice(0, -1) + ']],["clowns",[' + data[2].slice(0, -1) + ']]]';
-            console.log(JSON.stringify(data[0]));
+            console.log(JSON.stringify(data[0].slice(0, -1)));
             data = JSON.parse('[' + data.slice(0, -1) + ']');
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});
