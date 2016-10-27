@@ -19,7 +19,9 @@ sleepTime = 5
 
 class TweetStreamer(TwythonStreamer):
 
-    allData = []
+    clownData = []
+    trumpData = []
+    clintonData = []
 
     def __init__(self, *args, **kwargs):
         super(TweetStreamer, self).__init__(*args, **kwargs)
@@ -40,17 +42,49 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size, text):
+        temp = (lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now())
         pos_score, neg_score = senti_classifier.polarity_scores([text])
-        self.allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()])
-        temp = ''
+        sendToList(temp, ['clown' in text.lower(), 'trump' in text.lower(), 'clinton' in text.lower()])
+        temp = sendToFile()
+        with open('../data/data.txt', 'w+') as f:
+            f.write(temp)
+
+    def sendToList(self, lat, lon, size, text, word):
+        pos_score, neg_score = senti_classifier.polarity_scores([text])
+        temp = [lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()]
+        if word[0]:
+            clownData.extend(temp)
+        if word[1]:
+            trumpData.extend(temp)
+        if word[2]:
+            trumpData.extend(temp)
+
+    def sendToFile():
         curr = datetime.datetime.now()
-        while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 600:
-            self.allData = self.allData[5:]
-        for i in self.allData:
+        temp = ''
+        while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
+            self.clownData = self.clownData[5:]
+        for i in self.clownData:
             if not isinstance(i, datetime.datetime):
                 temp += str(i) + ","
-        with open('../data/clowns.txt', 'w+') as f:
-            f.write(temp)
+
+        temp += "\n"
+
+        while len(self.trumpData) > 4 and (curr - self.trumpData[4]).total_seconds() >= 600:
+            self.trumpData = self.trumpData[5:]
+        for i in self.trumpData:
+            if not isinstance(i, datetime.datetime):
+                temp += str(i) + ","
+
+        temp += "\n"
+
+        while len(self.clintonData) > 4 and (curr - self.clintonData[4]).total_seconds() >= 600:
+            self.clintonData = self.clintonData[5:]
+        for i in self.clintonData:
+            if not isinstance(i, datetime.datetime):
+                temp += str(i) + ","
+
+        return temp
 
 def call(streamer):
     try:
