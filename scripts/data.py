@@ -43,7 +43,7 @@ class TweetStreamer(TwythonStreamer):
             self.allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()])
             temp = ''
             curr = datetime.datetime.now()
-            while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 5:
+            while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 600:
                 self.allData = self.allData[5:]
             for i in self.allData:
                 if not isinstance(i, datetime.datetime):
@@ -51,16 +51,16 @@ class TweetStreamer(TwythonStreamer):
             f.write(temp)
 
 def call(streamer):
-    # try:
-    streamer = TweetStreamer(consumer_key, consumer_secret,
-                             access_token, access_token_secret)
-    streamer.statuses.filter(track = 'clown,trump,clinton')
-    # except:
-    #     print 'Sleeping for ' + str(sleepTime) + ' seconds'
-    #     for i in xrange(0, sleepTime):
-    #         sleep(1)
-    #         print str(i + 1) + '...'
-    #     call(streamer)
+    try:
+        streamer = TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret)
+        streamer.statuses.filter(track = 'clown,trump,clinton')
+    except:
+        print 'Sleeping for ' + str(sleepTime) + ' seconds'
+        for i in xrange(0, sleepTime, 5):
+            sleep(5)
+            print str(i + 1) + '...'
+        call(streamer)
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
