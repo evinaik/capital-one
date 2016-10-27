@@ -177,7 +177,7 @@
       scene.remove(scene.children[2]);
  }
 
- function addData(data) {
+ function addData(data, opts) {
   resetPoints();
   point = new THREE.Mesh(geometry);
   var color;
@@ -193,7 +193,7 @@
       color = new THREE.Color(0xFF0000);
     addPoint(lat, lng, size, color, subgeo);
   }
-  this._baseGeometry = subgeo;
+  this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
 }
 
 function addPoint(lat, lng, size, color, subgeo) {
