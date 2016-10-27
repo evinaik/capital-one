@@ -174,7 +174,7 @@
 
   function resetPoints() {
     var i;
-    for(i = scene.children.length - 2; i >= 0; i--){
+    while (scene.children.length > 2) {
      obj = scene.children[i + 2];
      scene.remove(obj);
    }
