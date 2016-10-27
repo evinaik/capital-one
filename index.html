@@ -113,7 +113,7 @@
   <div id="currentInfo">
     <span id="clinton" class="word">Clinton</span>
     <span id="trump" class="word">Trump</span>
-    <span id="clowns" class="word">Clown</span>
+    <span id="clowns" class="word">Clowns</span>
   </div>
 
   <div id="title">
@@ -150,9 +150,24 @@
   if(!Detector.webgl){
     Detector.addGetWebGLMessage();
   } else {
+    var ids = ['clinton', 'trump', 'clowns'];
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
     window.globe = globe;
+    var setWord = function(globe, t) {
+        return function() {
+          new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+          var y = document.getElementById(ids[t]);
+          if (y.getAttribute('class') === 'word active') {
+            return;
+          }
+          var yy = document.getElementsByClassName('word');
+          for(i=0; i<yy.length; i++) {
+            yy[i].setAttribute('class','word');
+          }
+          y.setAttribute('class', 'word active');
+        };
+      };
     update(globe, container);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading
