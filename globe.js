@@ -186,7 +186,6 @@
     var color;
     var subgeo = new THREE.Geometry();
     for (i = 0; i < data.length; i += 4) {
-      console.log(data[i]);
       lat = data[i];
       lng = data[i + 1];
       size = data[i + 2];
@@ -197,7 +196,7 @@
         color = new THREE.Color(0xFF0000);
       addPoint(lat, lng, size, color, subgeo);
     }
-    this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
+    this._baseGeometry = subgeo;
   }
 
   function addPoint(lat, lng, size, color, subgeo) {
