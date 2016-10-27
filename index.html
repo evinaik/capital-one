@@ -106,6 +106,7 @@
             last.set(temp);
             window.data = data;
             if (data.length > 0) {
+              globe.resetPoints();
               globe.addData(data, {format: 'magnitude', animated: true});
               globe.createPoints();
             }
