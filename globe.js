@@ -187,7 +187,7 @@
           lat = data[i];
           lng = data[i + 1];
           size = data[i + 2];
-          size *= 1000;
+          size *= 10000;
           color = colorFnWrapper(data,i);
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
@@ -205,7 +205,7 @@
       lng = data[i + 1];
       color = colorFnWrapper(data,i);
       size = data[i + 2];
-      size *= 1000;
+      size *= 10000;
       addPoint(lat, lng, size, color, subgeo);
     }
     if (opts.animated) {
