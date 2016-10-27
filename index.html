@@ -148,7 +148,7 @@
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
             var data = xhr.responseText.split("\n")[ind.get()];
-            console.log(ind.get());
+            console.log(data);
             data = JSON.parse(JSON.stringify(data.slice(0, -1).split(',').map(parseFloat)));
             window.data = data;
             globe.addData(data, {format: 'magnitude', animated: true});

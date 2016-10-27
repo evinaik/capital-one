@@ -51,20 +51,13 @@ class TweetStreamer(TwythonStreamer):
         pos_score, neg_score = senti_classifier.polarity_scores([text])
         temp = [lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()]
         if word[0]:
-            self.clownData.extend(temp)
+            self.clintonData.extend(temp)
         if word[1]:
             self.trumpData.extend(temp)
         if word[2]:
-            self.trumpData.extend(temp)
+            self.clownData.extend(temp)
 
     def sendToFile(self):
-        curr = datetime.datetime.now()
-        temp = ''
-        while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
-            self.clownData = self.clownData[5:]
-        for i in self.clownData:
-            if not isinstance(i, datetime.datetime):
-                temp += str(i) + ","
 
         temp += "\n"
 
@@ -76,9 +69,11 @@ class TweetStreamer(TwythonStreamer):
 
         temp += "\n"
 
-        while len(self.clintonData) > 4 and (curr - self.clintonData[4]).total_seconds() >= 600:
-            self.clintonData = self.clintonData[5:]
-        for i in self.clintonData:
+        curr = datetime.datetime.now()
+        temp = ''
+        while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
+            self.clownData = self.clownData[5:]
+        for i in self.clownData:
             if not isinstance(i, datetime.datetime):
                 temp += str(i) + ","
 
