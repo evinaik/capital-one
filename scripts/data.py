@@ -43,6 +43,7 @@ class TweetStreamer(TwythonStreamer):
         temp = ''
         curr = datetime.datetime.now()
         while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 600:
+            print allData;
             self.allData = self.allData[5:]
         for i in self.allData:
             if not isinstance(i, datetime.datetime):
