@@ -155,19 +155,23 @@
     var globe = new DAT.Globe(container);
     window.globe = globe;
     var setWord = function(globe, t) {
-        return function() {
-          new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-          var y = document.getElementById(ids[t]);
-          if (y.getAttribute('class') === 'word active') {
-            return;
-          }
-          var yy = document.getElementsByClassName('word');
-          for(i=0; i<yy.length; i++) {
-            yy[i].setAttribute('class','word');
-          }
-          y.setAttribute('class', 'word active');
-        };
+      return function() {
+        new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+        var y = document.getElementById(ids[t]);
+        if (y.getAttribute('class') === 'word active') {
+          return;
+        }
+        var yy = document.getElementsByClassName('word');
+        for(i=0; i<yy.length; i++) {
+          yy[i].setAttribute('class','word');
+        }
+        y.setAttribute('class', 'word active');
       };
+    };
+    for(var i = 0; i<ids.length; i++) {
+      var y = document.getElementById(ids[i]);
+      y.addEventListener('mouseover', setWord(globe,i), false);
+    }
     update(globe, container);
     globe.animate();
     document.body.style.backgroundImage = 'none'; // remove loading
