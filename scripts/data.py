@@ -4,7 +4,6 @@ from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
 from senti_classifier import senti_classifier
 from time import sleep
-from multiprocessing import Process
 import datetime
 import nltk
 
@@ -44,6 +43,9 @@ class TweetStreamer(TwythonStreamer):
         pos_score, neg_score = senti_classifier.polarity_scores([text])
         self.allData.extend([lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()])
         temp = ''
+        curr = datetime.datetime.now()
+        while len(self.allData) > 4 and (curr - self.allData[4]).total_seconds() >= 600:
+            self.allData = self.allData[5:]
         for i in self.allData:
             if not isinstance(i, datetime.datetime):
                 temp += str(i) + ","
@@ -52,30 +54,16 @@ class TweetStreamer(TwythonStreamer):
 
 def call(streamer):
     try:
-        if streamer == 'empty':
-            streamer = TweetStreamer(consumer_key, consumer_secret,
-                                 access_token, access_token_secret)
         streamer.statuses.filter(track = 'clown,trump,clinton')
     except:
         print 'Sleeping for ' + str(sleepTime) + ' seconds'
         for i in xrange(0, sleepTime, 5):
             sleep(5)
             print str(i + 5) + '...'
-        call('empty')
-
-def wipe():
-    while True:
-        print 'going'
-        curr = datetime.datetime.now()
-        while len(TweetStreamer.allData) > 4 and (curr - TweetStreamer.allData[4]).total_seconds() >= 3:
-            TweetStreamer.allData = TweetStreamer.allData[5:]
-            print curr
-        sleep(1)
+        call(TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret))
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
                                  access_token, access_token_secret)
-    p1 = Process(target=call, args=('empty',))
-    p2 = Process(target=wipe)
-    p1.start()
-    p2.start()
+    call(streamer)
