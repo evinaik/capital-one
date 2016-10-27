@@ -63,7 +63,7 @@ def call(streamer):
 
 def wipe():
     while True:
-        while len(TweetStreamer.allData) > 4 and (curr - TweetStreamer.allData[4]).total_seconds() >= 600:
+        while len(TweetStreamer.allData) > 4 and (curr - TweetStreamer.allData[4]).total_seconds() >= 3:
             TweetStreamer.allData = TweetStreamer.allData[5:]
         sleep(1)
 
