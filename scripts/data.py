@@ -29,14 +29,14 @@ class TweetStreamer(TwythonStreamer):
         self.geo = Nominatim()
     def on_success(self, data):
         if 'geo' in data and data['geo']:
-            self.write(str(data['geo']['coordinates'][0]), str(data['geo']['coordinates'][0]), data['user']['followers_count'], data['text'])
+            self.write(data['geo']['coordinates'][0], data['geo']['coordinates'][0], data['user']['followers_count'], data['text'])
         elif 'user' in data and 'location' in data['user'] and data['user']['location']:
             try:
                 loc = self.geo.geocode(data['user']['location'])
             except:
                 return
             if loc:
-                self.write(str(loc.latitude), str(loc.longitude), data['user']['followers_count'], data['text'])
+                self.write(loc.latitude, loc.longitude, data['user']['followers_count'], data['text'])
 
     def on_error(self, status_code, data):
         print status_code
