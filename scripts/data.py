@@ -4,9 +4,9 @@ from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
 from senti_classifier import senti_classifier
 from time import sleep
+from multiprocessing import Process
 import datetime
 import nltk
-import multiprocessing
 
 nltk.data.path.append('../nltk_data/')
 
