@@ -238,7 +238,7 @@
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = JSON.parse(xhr.responseText);
+            var data = xhr.responseText;
             var temp = [];
             for (var i = 0; i < ids.length; i++) {
               var d = data[i].slice(0, -1).split(',').map(parseFloat);
