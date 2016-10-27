@@ -130,71 +130,127 @@
   <script type="text/javascript" src="globe.js"></script>
   <script type="text/javascript">
 
-    function update(globe, container) {
-      var xhr = new XMLHttpRequest();
-      xhr.open('GET', 'data/data.txt', true);
+  //   function update(globe, container) {
+  //     var xhr = new XMLHttpRequest();
+  //     xhr.open('GET', 'data/data.txt', true);
+  //     xhr.onreadystatechange = function(e) {
+  //       if (xhr.readyState === 4) {
+  //         if (xhr.status === 200) {
+  //           var data = xhr.responseText.split("\n")
+  //           var temp = [];
+  //           for (var i = 0; i < ids.length; i++) {
+  //             var d = data[i].slice(0, -1).split(',').map(parseFloat);
+  //             if (d.length > 0)
+  //               temp.push([ids[i], d]);
+  //             else
+  //               temp.push([ids[1], [0, 0, 0]])
+  //           }
+  //           data = JSON.parse(JSON.stringify(temp));
+  //           window.data = data;
+  //           for (var i=0;i<data.length;i++)
+  //             globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
+  //           globe.createPoints();
+  //         document.body.style.backgroundImage = 'none'; // remove loading
+  //       }
+  //     }
+  //   };
+  //   xhr.send(null);
+  // }
+  // if(!Detector.webgl){
+  //   Detector.addGetWebGLMessage();
+  // } else {
+  //   var ids = ['clinton', 'trump', 'clowns'];
+  //   var container = document.getElementById('container');
+  //   var globe = new DAT.Globe(container);
+  //   window.globe = globe;
+
+  //   var setWord = function(globe, t) {
+  //     return function() {
+  //       new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+  //       var y = document.getElementById(ids[t]);
+  //       if (y.getAttribute('class') === 'word active') {
+  //         return;
+  //       }
+  //       var yy = document.getElementsByClassName('word');
+  //       for(i=0; i<yy.length; i++) {
+  //         yy[i].setAttribute('class','word');
+  //       }
+  //       y.setAttribute('class', 'word active');
+  //     };
+  //   };
+
+  //   for(var i = 0; i<ids.length; i++) {
+  //     var y = document.getElementById(ids[i]);
+  //     y.addEventListener('mouseover', setWord(globe,i), false);
+  //   }
+
+  //   TWEEN.start();
+
+  //   update(globe, container);
+  //   globe.animate();
+  //   // setWord(globe, 0);
+  //   document.body.style.backgroundImage = 'none'; // remove loading
+  //   window.setInterval(function(){
+  //     update(globe, container);
+  //   }, 1000);
+  // }
+
+
+
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
+
+      var words = ['clinton','trump','clown'];
+      var container = document.getElementById('container');
+      var globe = new DAT.Globe(container);
+
+      console.log(globe);
+      var i, tweens = [];
+      
+      var settime = function(globe, t) {
+        return function() {
+          new TWEEN.Tween(globe).to({time: t/words.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+          var y = document.getElementById('word'+words[t]);
+          if (y.getAttribute('class') === 'word active') {
+            return;
+          }
+          var yy = document.getElementsByClassName('word');
+          for(i=0; i<yy.length; i++) {
+            yy[i].setAttribute('class','word');
+          }
+          y.setAttribute('class', 'word active');
+        };
+      };
+      
+      for(var i = 0; i<words.length; i++) {
+        var y = document.getElementById('word'+words[i]);
+        y.addEventListener('mouseover', settime(globe,i), false);
+      }
+      
+      var xhr;
+      TWEEN.start();
+      
+      
+      xhr = new XMLHttpRequest();
+      xhr.open('GET', '/globe/population909500.json', true);
       xhr.onreadystatechange = function(e) {
         if (xhr.readyState === 4) {
           if (xhr.status === 200) {
-            var data = xhr.responseText.split("\n")
-            var temp = [];
-            for (var i = 0; i < ids.length; i++) {
-              var d = data[i].slice(0, -1).split(',').map(parseFloat);
-              if (d.length > 0)
-                temp.push([ids[i], d]);
-              else
-                temp.push([ids[1], [0, 0, 0]])
-            }
-            data = JSON.parse(JSON.stringify(temp));
+            var data = JSON.parse(xhr.responseText);
             window.data = data;
-            for (var i=0;i<data.length;i++)
+            for (i=0;i<data.length;i++) {
               globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
+            }
             globe.createPoints();
-          document.body.style.backgroundImage = 'none'; // remove loading
+            settime(globe,0)();
+            globe.animate();
+            document.body.style.backgroundImage = 'none'; // remove loading
+          }
         }
-      }
-    };
-    xhr.send(null);
-  }
-  if(!Detector.webgl){
-    Detector.addGetWebGLMessage();
-  } else {
-    var ids = ['clinton', 'trump', 'clowns'];
-    var container = document.getElementById('container');
-    var globe = new DAT.Globe(container);
-    window.globe = globe;
-
-    var setWord = function(globe, t) {
-      return function() {
-        new TWEEN.Tween(globe).to({time: t/ids.length},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-        var y = document.getElementById(ids[t]);
-        if (y.getAttribute('class') === 'word active') {
-          return;
-        }
-        var yy = document.getElementsByClassName('word');
-        for(i=0; i<yy.length; i++) {
-          yy[i].setAttribute('class','word');
-        }
-        y.setAttribute('class', 'word active');
       };
-    };
-
-    for(var i = 0; i<ids.length; i++) {
-      var y = document.getElementById(ids[i]);
-      y.addEventListener('mouseover', setWord(globe,i), false);
+      xhr.send(null);
     }
-
-    TWEEN.start();
-
-    update(globe, container);
-    globe.animate();
-    // setWord(globe, 0);
-    document.body.style.backgroundImage = 'none'; // remove loading
-    window.setInterval(function(){
-      update(globe, container);
-    }, 1000);
-  }
-
 </script>
 
 </body>
