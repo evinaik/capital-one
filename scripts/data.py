@@ -57,7 +57,7 @@ class TweetStreamer(TwythonStreamer):
         if word[2]:
             self.trumpData.extend(temp)
 
-    def sendToFile():
+    def sendToFile(self):
         curr = datetime.datetime.now()
         temp = ''
         while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
