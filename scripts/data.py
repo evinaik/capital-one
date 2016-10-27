@@ -42,7 +42,7 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size, text):
-        self.sendToList(lat, lon, size/(size+5000.0), text, ['clown' in text.lower(), 'trump' in text.lower(), 'clinton' in text.lower()])
+        self.sendToList(lat, lon, size, text, ['clown' in text.lower(), 'trump' in text.lower(), 'clinton' in text.lower()])
         temp = self.sendToFile()
         with open('../data/data.txt', 'w+') as f:
             f.write(temp)
@@ -81,8 +81,6 @@ class TweetStreamer(TwythonStreamer):
         for i in self.clintonData:
             if not isinstance(i, datetime.datetime):
                 temp += str(i) + ","
-
-        print self.clownData, self.trumpData, self.clintonData
 
         return temp
 
