@@ -13,15 +13,9 @@
 
  var DAT = DAT || {};
 
- DAT.Globe = function(container, opts) {
-  opts = opts || {};
-  
-  var colorFn = opts.colorFn || function(x) {
-    var c = new THREE.Color();
-    c.setHSL( ( 0.6 - ( x * 0.5 ) ), 1.0, 0.5 );
-    return c;
-  };
-  var imgDir = opts.imgDir || '/';
+
+ DAT.Globe = function(container) {
+  var imgDir = '/';
 
   var Shaders = {
     'earth' : {
@@ -73,6 +67,8 @@
 
   var overRenderer;
 
+  var geometry;
+
   var curZoomSpeed = 0;
   var zoomSpeed = 50;
 
@@ -99,7 +95,7 @@
 
     scene = new THREE.Scene();
 
-    var geometry = new THREE.SphereGeometry(200, 40, 30);
+    geometry = new THREE.SphereGeometry(200, 40, 30);
 
     shader = Shaders['earth'];
     uniforms = THREE.UniformsUtils.clone(shader.uniforms);
@@ -139,7 +135,7 @@
     geometry = new THREE.BoxGeometry(0.75, 0.75, 1);
     geometry.applyMatrix(new THREE.Matrix4().makeTranslation(0,0,-0.5));
 
-    point = new THREE.Mesh(geometry);
+    // point = new THREE.Mesh(geometry);
 
     renderer = new THREE.WebGLRenderer({antialias: true});
     renderer.setSize(w, h);
@@ -165,95 +161,51 @@
     }, false);
   }
 
-  function addData(data, opts) {
-    var lat, lng, size, color, i, step, colorFnWrapper;
-
-    opts.animated = opts.animated || false;
-    this.is_animated = opts.animated;
-    opts.format = opts.format || 'magnitude'; // other option is 'legend'
-    step = 4;
-    colorFnWrapper = function(data, i) {
-      if (data[i + 3] == 1)
-        return new THREE.Color(0x66FF00);
-      else
-        return new THREE.Color(0xFF0000);
-    }
-
-    if (opts.animated) {
-      if (this._baseGeometry === undefined) {
-        this._baseGeometry = new THREE.Geometry();
-        for (i = 0; i < data.length; i += step) {
-          lat = data[i];
-          lng = data[i + 1];
-          size = 0;
-          // size *= 1000;
-          color = colorFnWrapper(data,i);
-          addPoint(lat, lng, size, color, this._baseGeometry);
-        }
-      }
-      if(this._morphTargetId === undefined) {
-        this._morphTargetId = 0;
-      } else {
-        this._morphTargetId += 1;
-      }
-      opts.name = opts.name || 'morphTarget'+this._morphTargetId;
-    }
-    var subgeo = new THREE.Geometry();
-    for (i = 0; i < data.length; i += step) {
-      console.log(lat);
-      lat = data[i];
-      lng = data[i + 1];
-      color = colorFnWrapper(data,i);
-      size = data[i + 2];
-      size *= 1000;
-      addPoint(lat, lng, size, color, subgeo);
-    }
-    if (opts.animated) {
-      this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
-    } else {
-      this._baseGeometry = subgeo;
-    }
-
-  };
-
   function createPoints() {
     if (this._baseGeometry !== undefined) {
-      if (this.is_animated === false) {
-        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-          color: 0xffffff,
-          vertexColors: THREE.FaceColors,
-          morphTargets: false
-        }));
-      } else {
-        if (this._baseGeometry.morphTargets.length < 8) {
-          console.log('t l',this._baseGeometry.morphTargets.length);
-          var padding = 8-this._baseGeometry.morphTargets.length;
-          console.log('padding', padding);
-          for(var i=0; i<=padding; i++) {
-            console.log('padding',i);
-            this._baseGeometry.morphTargets.push({'name': 'morphPadding'+i, vertices: this._baseGeometry.vertices});
-          }
-        }
-        this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-          color: 0xffffff,
-          vertexColors: THREE.FaceColors,
-          morphTargets: true
-        }));
-      }
+      this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
+        color: 0xffffff,
+        vertexColors: THREE.FaceColors,
+        morphTargets: false
+      }));
       scene.add(this.points);
     }
   }
 
-  function addPoint(lat, lng, size, color, subgeo) {
+  function resetPoints() {
+    while (scene.children.length > 2)
+      scene.remove(scene.children[2]);
+ }
 
-    var phi = (90 - lat) * Math.PI / 180;
-    var theta = (180 - lng) * Math.PI / 180;
+ function addData(data) {
+  resetPoints();
+  point = new THREE.Mesh(geometry);
+  var color;
+  var subgeo = new THREE.Geometry();
+  for (i = 0; i < data.length; i += 4) {
+    lat = data[i];
+    lng = data[i + 1];
+    size = data[i + 2];
+    size *= 1000;
+    if (data[i + 3] == 1)
+      color = new THREE.Color(0x66FF00);
+    else
+      color = new THREE.Color(0xFF0000);
+    addPoint(lat, lng, size, color, subgeo);
+  }
+  this._baseGeometry = subgeo;
+}
 
-    point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
-    point.position.y = 200 * Math.cos(phi);
-    point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
+function addPoint(lat, lng, size, color, subgeo) {
 
-    point.lookAt(mesh.position);
+  var phi = (90 - lat) * Math.PI / 180;
+  var theta = (180 - lng) * Math.PI / 180;
+
+  point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
+  point.position.y = 200 * Math.cos(phi);
+  point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
+
+  point.lookAt(mesh.position);
 
     point.scale.z = Math.max( size, 0.1 ); // avoid non-invertible matrix
     point.updateMatrix();
@@ -399,6 +351,7 @@
 
   this.addData = addData;
   this.createPoints = createPoints;
+  this.resetPoints = resetPoints;
   this.renderer = renderer;
   this.scene = scene;
 
