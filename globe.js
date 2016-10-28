@@ -183,6 +183,7 @@
   var color;
   var subgeo = new THREE.Geometry();
   for (i = 0; i < data.length; i += 4) {
+    console.log(data[0]);
     lat = data[i];
     lng = data[i + 1];
     size = data[i + 2];
