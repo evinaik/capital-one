@@ -52,6 +52,7 @@ class TweetStreamer(TwythonStreamer):
         pos_score, neg_score = senti_classifier.polarity_scores([text])
         temp = [lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()]
         if word[0]:
+            print temp
             self.clintonData.extend(temp)
         if word[1]:
             self.trumpData.extend(temp)
@@ -65,31 +66,25 @@ class TweetStreamer(TwythonStreamer):
         temp[0].append([])
         while len(self.clintonData) > 4 and (curr - self.clintonData[4]).total_seconds() >= 600:
             self.clintonData = self.clintonData[5:]
-        for i in self.clintonData:
-            if not isinstance(i, datetime.datetime):
-                temp[0][1].append(i)
+        temp[0][1].append([i for i in self.clintonData if not isinstance(i, datetime.datetime)])
 
         temp[1].append('trump')
         temp[1].append([])
         while len(self.trumpData) > 4 and (curr - self.trumpData[4]).total_seconds() >= 600:
             self.trumpData = self.trumpData[5:]
-        for i in self.trumpData:
-            if not isinstance(i, datetime.datetime):
-                temp[1][1].append(i)
+        temp[1][1].append([i for i in self.trumpData if not isinstance(i, datetime.datetime)])
 
         temp[2].append('clowns')
         temp[2].append([])
         while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
             self.clownData = self.clownData[5:]
-        for i in self.clownData:
-            if not isinstance(i, datetime.datetime):
-                temp[2][1].append(i)
+        temp[2][1].append([i for i in self.clownData if not isinstance(i, datetime.datetime)])
 
         return temp
 
 def call(streamer):
     # try:
-    streamer.statuses.filter(track = 'clown, trump, clinton, donald trump, hillary clinton')
+    streamer.statuses.filter(track = 'clown,trump,clinton,donald trump,hillary clinton,donald,hillary')
     # except:
     #     print 'Sleeping for ' + str(sleepTime) + ' seconds'
     #     for i in xrange(0, sleepTime, 5):
