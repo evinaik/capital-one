@@ -73,7 +73,7 @@ class TweetStreamer(TwythonStreamer):
         return temp
 
     def appendData(self, l, d, c, name):
-        while len(d) > 4 and (c - d[4]).total_seconds() >= 600:
+        while len(d) > 4 and (c - d[4]).total_seconds() >= 3600:
             d = d[5:]
         l.append(name)
         l.append([])
