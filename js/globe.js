@@ -186,8 +186,6 @@
           vertexColors: THREE.FaceColors,
           morphTargets: true
         }));
-        while (scene.children.length > 2)
-          scene.remove(scene.children[2]);
         scene.add(this.points);
       }
     }
@@ -219,7 +217,7 @@
         lng = data[i + 1];
         size = data[i + 2];
         color = colorFn(size, data[i + 3]);
-        size = (size+.1)*100;
+        size = (size + .009) * 100 + 1;
         addPoint(lat, lng, size, color, subgeo);
       }
       this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
@@ -237,153 +235,153 @@
 
       point.lookAt(mesh.position);
 
-    point.scale.z = Math.max( size, 0.1 ); // avoid non-invertible matrix
-    point.updateMatrix();
-
-    for (var i = 0; i < point.geometry.faces.length; i++) {
-
-      point.geometry.faces[i].color = color;
-
-    }
-    if(point.matrixAutoUpdate){
+      point.scale.z = Math.max( size, 0.1 ); // avoid non-invertible matrix
       point.updateMatrix();
+
+      for (var i = 0; i < point.geometry.faces.length; i++) {
+
+        point.geometry.faces[i].color = color;
+
+      }
+      if(point.matrixAutoUpdate){
+        point.updateMatrix();
+      }
+      subgeo.merge(point.geometry, point.matrix);
     }
-    subgeo.merge(point.geometry, point.matrix);
-  }
 
-  function onMouseDown(event) {
-    event.preventDefault();
-
-    container.addEventListener('mousemove', onMouseMove, false);
-    container.addEventListener('mouseup', onMouseUp, false);
-    container.addEventListener('mouseout', onMouseOut, false);
-
-    mouseOnDown.x = - event.clientX;
-    mouseOnDown.y = event.clientY;
-
-    targetOnDown.x = target.x;
-    targetOnDown.y = target.y;
-
-    container.style.cursor = 'move';
-  }
-
-  function onMouseMove(event) {
-    mouse.x = - event.clientX;
-    mouse.y = event.clientY;
-
-    var zoomDamp = distance/1000;
-
-    target.x = targetOnDown.x + (mouse.x - mouseOnDown.x) * 0.005 * zoomDamp;
-    target.y = targetOnDown.y + (mouse.y - mouseOnDown.y) * 0.005 * zoomDamp;
-
-    target.y = target.y > PI_HALF ? PI_HALF : target.y;
-    target.y = target.y < - PI_HALF ? - PI_HALF : target.y;
-  }
-
-  function onMouseUp(event) {
-    container.removeEventListener('mousemove', onMouseMove, false);
-    container.removeEventListener('mouseup', onMouseUp, false);
-    container.removeEventListener('mouseout', onMouseOut, false);
-    container.style.cursor = 'auto';
-  }
-
-  function onMouseOut(event) {
-    container.removeEventListener('mousemove', onMouseMove, false);
-    container.removeEventListener('mouseup', onMouseUp, false);
-    container.removeEventListener('mouseout', onMouseOut, false);
-  }
-
-  function onMouseWheel(event) {
-    event.preventDefault();
-    if (overRenderer) {
-      zoom(event.wheelDeltaY * 0.3);
-    }
-    return false;
-  }
-
-  function onDocumentKeyDown(event) {
-    switch (event.keyCode) {
-      case 38:
-      zoom(100);
+    function onMouseDown(event) {
       event.preventDefault();
-      break;
-      case 40:
-      zoom(-100);
-      event.preventDefault();
-      break;
+
+      container.addEventListener('mousemove', onMouseMove, false);
+      container.addEventListener('mouseup', onMouseUp, false);
+      container.addEventListener('mouseout', onMouseOut, false);
+
+      mouseOnDown.x = - event.clientX;
+      mouseOnDown.y = event.clientY;
+
+      targetOnDown.x = target.x;
+      targetOnDown.y = target.y;
+
+      container.style.cursor = 'move';
     }
-  }
 
-  function onWindowResize( event ) {
-    camera.aspect = window.innerWidth / window.innerHeight;
-    camera.updateProjectionMatrix();
-    renderer.setSize( window.innerWidth, window.innerHeight );
-  }
+    function onMouseMove(event) {
+      mouse.x = - event.clientX;
+      mouse.y = event.clientY;
 
-  function zoom(delta) {
-    distanceTarget -= delta;
-    distanceTarget = distanceTarget > 1000 ? 1000 : distanceTarget;
-    distanceTarget = distanceTarget < 350 ? 350 : distanceTarget;
-  }
+      var zoomDamp = distance/1000;
 
-  function animate() {
-    requestAnimationFrame(animate);
-    render();
-  }
+      target.x = targetOnDown.x + (mouse.x - mouseOnDown.x) * 0.005 * zoomDamp;
+      target.y = targetOnDown.y + (mouse.y - mouseOnDown.y) * 0.005 * zoomDamp;
 
-  function render() {
-    zoom(curZoomSpeed);
+      target.y = target.y > PI_HALF ? PI_HALF : target.y;
+      target.y = target.y < - PI_HALF ? - PI_HALF : target.y;
+    }
 
-    rotation.x += (target.x - rotation.x) * 0.1;
-    rotation.y += (target.y - rotation.y) * 0.1;
-    distance += (distanceTarget - distance) * 0.3;
+    function onMouseUp(event) {
+      container.removeEventListener('mousemove', onMouseMove, false);
+      container.removeEventListener('mouseup', onMouseUp, false);
+      container.removeEventListener('mouseout', onMouseOut, false);
+      container.style.cursor = 'auto';
+    }
 
-    camera.position.x = distance * Math.sin(rotation.x) * Math.cos(rotation.y);
-    camera.position.y = distance * Math.sin(rotation.y);
-    camera.position.z = distance * Math.cos(rotation.x) * Math.cos(rotation.y);
+    function onMouseOut(event) {
+      container.removeEventListener('mousemove', onMouseMove, false);
+      container.removeEventListener('mouseup', onMouseUp, false);
+      container.removeEventListener('mouseout', onMouseOut, false);
+    }
 
-    camera.lookAt(mesh.position);
+    function onMouseWheel(event) {
+      event.preventDefault();
+      if (overRenderer) {
+        zoom(event.wheelDeltaY * 0.3);
+      }
+      return false;
+    }
 
-    renderer.render(scene, camera);
-  }
-
-  init();
-  this.animate = animate;
-
-
-  this.__defineGetter__('time', function() {
-    return this._time || 0;
-  });
-
-  this.__defineSetter__('time', function(t) {
-    var validMorphs = [];
-    var morphDict = this.points.morphTargetDictionary;
-    for(var k in morphDict) {
-      if(k.indexOf('morphPadding') < 0) {
-        validMorphs.push(morphDict[k]);
+    function onDocumentKeyDown(event) {
+      switch (event.keyCode) {
+        case 38:
+        zoom(100);
+        event.preventDefault();
+        break;
+        case 40:
+        zoom(-100);
+        event.preventDefault();
+        break;
       }
     }
-    validMorphs.sort();
-    var l = validMorphs.length-1;
-    var scaledt = t*l+1;
-    var index = Math.floor(scaledt);
-    for (i=0;i<validMorphs.length;i++) {
-      this.points.morphTargetInfluences[validMorphs[i]] = 0;
+
+    function onWindowResize( event ) {
+      camera.aspect = window.innerWidth / window.innerHeight;
+      camera.updateProjectionMatrix();
+      renderer.setSize( window.innerWidth, window.innerHeight );
     }
-    var lastIndex = index - 1;
-    var leftover = scaledt - index;
-    if (lastIndex >= 0) {
-      this.points.morphTargetInfluences[lastIndex] = 1 - leftover;
+
+    function zoom(delta) {
+      distanceTarget -= delta;
+      distanceTarget = distanceTarget > 1000 ? 1000 : distanceTarget;
+      distanceTarget = distanceTarget < 350 ? 350 : distanceTarget;
     }
-    this.points.morphTargetInfluences[index] = leftover;
-    this._time = t;
-  });
 
-  this.addData = addData;
-  this.createPoints = createPoints;
-  this.renderer = renderer;
-  this.scene = scene;
+    function animate() {
+      requestAnimationFrame(animate);
+      render();
+    }
 
-  return this;
+    function render() {
+      zoom(curZoomSpeed);
 
-};
+      rotation.x += (target.x - rotation.x) * 0.1;
+      rotation.y += (target.y - rotation.y) * 0.1;
+      distance += (distanceTarget - distance) * 0.3;
+
+      camera.position.x = distance * Math.sin(rotation.x) * Math.cos(rotation.y);
+      camera.position.y = distance * Math.sin(rotation.y);
+      camera.position.z = distance * Math.cos(rotation.x) * Math.cos(rotation.y);
+
+      camera.lookAt(mesh.position);
+
+      renderer.render(scene, camera);
+    }
+
+    init();
+    this.animate = animate;
+
+
+    this.__defineGetter__('time', function() {
+      return this._time || 0;
+    });
+
+    this.__defineSetter__('time', function(t) {
+      var validMorphs = [];
+      var morphDict = this.points.morphTargetDictionary;
+      for(var k in morphDict) {
+        if(k.indexOf('morphPadding') < 0) {
+          validMorphs.push(morphDict[k]);
+        }
+      }
+      validMorphs.sort();
+      var l = validMorphs.length-1;
+      var scaledt = t*l+1;
+      var index = Math.floor(scaledt);
+      for (i=0;i<validMorphs.length;i++) {
+        this.points.morphTargetInfluences[validMorphs[i]] = 0;
+      }
+      var lastIndex = index - 1;
+      var leftover = scaledt - index;
+      if (lastIndex >= 0) {
+        this.points.morphTargetInfluences[lastIndex] = 1 - leftover;
+      }
+      this.points.morphTargetInfluences[index] = leftover;
+      this._time = t;
+    });
+
+    this.addData = addData;
+    this.createPoints = createPoints;
+    this.renderer = renderer;
+    this.scene = scene;
+
+    return this;
+
+  };

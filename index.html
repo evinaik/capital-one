@@ -23,7 +23,7 @@
       width: 270px;
       position: absolute;
       left: 20px;
-      top: 63px;
+      top: 83px;
 
       background-color: rgba(0,0,0,0.2);
 
@@ -67,6 +67,44 @@
       padding: 10px;
     }
 
+    #time {
+      position: absolute;
+      top: 42px;
+      width: 270px;
+      left: 20px;
+      background-color: rgba(0,0,0,0.2);
+      border-radius: 3px;
+      font: 12px Georgia;
+      padding: 10px;
+    }
+
+    #ref {
+      position: absolute;
+      top: 20px;
+      width: 70px;
+      right: 20px;
+      border-radius: 3px;
+      font: 20px Georgia;
+      padding: 10px;
+    }
+
+    #ref:hover {
+      cursor: pointer;
+      font: 22px Georgia;
+    }
+
+    #description {
+      position: absolute;
+      top: 150px;
+      height: 400px;
+      width: 270px;
+      left: 20px;
+      background-color: rgba(0,0,0,0.2);
+      border-radius: 3px;
+      font: 14px Georgia;
+      padding: 10px;
+    }
+
     .word {
       font: 16px Georgia;
       line-height: 26px;
@@ -107,7 +145,7 @@
   <div id="container"></div>
 
   <div id="info">
-    <strong><a href="http://www.chromeexperiments.com">WebGL Globe</a></strong> <span class="bull">&bull;</span> Created by the Google Data Arts Team <span class="bull">&bull;</span> Data acquired from <a href="https://www.ngdc.noaa.gov/nndc/struts/results?type_0=Exact&query_0=$HAZ_EVENT_ID&t=102557&s=50&d=54&dfn=volerup.txt">NOAA</a>
+    <strong><a href="http://www.chromeexperiments.com">WebGL Globe</a></strong> <span class="bull">&bull;</span> Created by the Google Data Arts Team <span class="bull">&bull;</span> Data acquired from <a href="https://www.twitter.com/">Twitter</a>
   </div>
 
   <div id="currentInfo">
@@ -115,9 +153,13 @@
     <span id="wordtrump" class="word">Trump</span>
   </div>
 
-  <div id="title">
-    Live Tweets from Keywords
-  </div>
+  <div id="title">Tweet Tracker</div>
+
+  <div id="description">This globe displays tweets from the last 10 minutes about Hillary Clinton and Donald Trump (2016 Presidential Election Candidates). Green points indicate tweets with a positive connotation, and red points indicate a negative connotation. The size of the points reveals the relative follower count of the tweeter.</div>
+
+  <div id="time"></div>
+
+  <div id="ref" onclick="location.reload()">Refresh</div>
 
   <a id="ce" href="http://www.chromeexperiments.com">
     <span>Google</span>
@@ -129,128 +171,19 @@
   <script type="text/javascript" src="js/globe.js"></script>
   <script type="text/javascript">
 
-  //   function IndexHold()
-  //   {
-  //   }
-
-  //   IndexHold.prototype = new function()
-  //   {
-  //     _privateStatic = 0;
-  //     this.get = function() { return _privateStatic; }
-  //     this.set = function(z) { _privateStatic = z; }
-  //   };
-  //   var ind = new IndexHold();
-  //   window.ind = ind;
-
-  //   function update(globe, container) {
-  //     var xhr = new XMLHttpRequest();
-  //     xhr.open('GET', 'data/data.json', true);
-  //     xhr.onreadystatechange = function(e) {
-  //       if (xhr.readyState === 4) {
-  //         if (xhr.status === 200) {
-  //           var data = JSON.parse(xhr.responseText);
-  //           window.data = data;
-  //           for (var i=0;i<data.length;i++) {
-  //             globe.addData(data[i][1], {format: 'magnitude', name: data[i][0], animated: true});
-  //             console.log(data[i][0]);
-  //           }
-  //           globe.createPoints();
-  //         document.body.style.backgroundImage = 'none'; // remove loading
-  //       }
-  //     }
-  //   };
-  //   xhr.send(null);
-  // }
-  // if(!Detector.webgl){
-  //   Detector.addGetWebGLMessage();
-  // } else {
-  //   var ids = ['clinton', 'trump', 'clowns'];
-  //   var container = document.getElementById('container');
-  //   var globe = new DAT.Globe(container);
-  //   window.globe = globe;
-
-  //   for (var k = 0; k < ids.length; k++)
-  //         document.getElementById('word' + ids[k]).setAttribute('class', 'word');
-  //     y.setAttribute('class', 'word active');
-
-  //   for(var i = 0; i<ids.length; i++) {
-  //     var y = document.getElementById('word' + ids[i]);
-  //     y.addEventListener('mouseover', function() {
-  //       ind.set(j);
-  //       update(globe, container);
-  //     }, false);
-  //   }
-
-  //   // TWEEN.start();
-
-  //   update(globe, container);
-  //   globe.animate();
-  //   // setWord(globe, 0);
-  //   document.body.style.backgroundImage = 'none'; // remove loading
-  //   window.setInterval(function(){
-  //     update(globe, container);
-  //   }, 1000);
-  // }
-
-  // function IndexHold()
-  // {
-  // }
-  // IndexHold.prototype = new function()
-  // {
-  //   _privateStatic = 0;
-  //   this.get = function() { return _privateStatic; }
-  //   this.set = function(z) { _privateStatic = z; }
-  // };
-  // var ind = new IndexHold();
-  // window.ind = ind;
-  // function update(globe, container) {
-  //   $.getJSON('/data/data.json', function(json) {
-  //     var data = json;
-  //     window.data = data;
-  //     globe.addData(data[ind.get()][1], {format: 'magnitude', animated: true});
-  //     globe.createPoints();
-  //         document.body.style.backgroundImage = 'none'; // remove loading
-  //       });
-  // }
-  // var words = ['clinton', 'trump', 'clowns'];
-  // for(var i = 0; i<words.length; i++) {
-  //   (function(j) {
-  //     var y = document.getElementById('word'+words[j]);
-  //     y.addEventListener('mouseover', function() {
-  //       ind.set(j);
-  //       update(globe, container);
-  //       for (var k = 0; k < words.length; k++)
-  //         document.getElementById('word' + words[k]).setAttribute('class', 'word');
-  //       y.setAttribute('class', 'word active'); }, false);
-  //   }(i));
-  // }
-  // if(!Detector.webgl){
-  //   Detector.addGetWebGLMessage();
-  // } else {
-  //   var container = document.getElementById('container');
-  //   var globe = new DAT.Globe(container);
-  //   window.globe = globe;
-  //   update(globe, container, 0);
-  //   globe.animate();
-  //   document.body.style.backgroundImage = 'none'; // remove loading
-  //   window.setInterval(function(){
-  //     update(globe, container);
-  //   }, 1000);
-  // }
-
   if(!Detector.webgl){
     Detector.addGetWebGLMessage();
   } else {
 
+    $("#time").html("since " + new Date().toUTCString());
     var words = ['clinton','trump'];
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
 
-    var i, tweens = [], curr;
+    var i, tweens = [];
 
     var settime = function(globe, t) {
       return function() {
-        curr = t;
         new TWEEN.Tween(globe).to({time: t},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
         var y = document.getElementById('word'+words[t]);
         if (y.getAttribute('class') === 'word active') {
@@ -271,25 +204,21 @@
 
     TWEEN.start();
 
-    function update(globe, container) {
       $.getJSON('data.json', function(json) {
         var data = json;
         window.data = data;
         for (i=0;i<data.length;i++)
           globe.addData(data[i][1], {name: data[i][0]});
         globe.createPoints();
-        settime(globe, curr)();
           document.body.style.backgroundImage = 'none'; // remove loading
         });
-    }
 
 
-    update(globe, container);
     settime(globe,0)();
     globe.animate();
-    window.setInterval(function(){
-      update(globe, container);
-    }, 1000);
+    // window.setInterval(function(){
+    //   globe.rotate();
+    // }, 1000);
   }
 
 </script>
