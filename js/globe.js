@@ -186,7 +186,8 @@
           vertexColors: THREE.FaceColors,
           morphTargets: true
         }));
-        scene.remove(scene.children[2]);
+        while (scene.children.length > 2)
+          scene.remove(scene.children[2]);
         scene.add(this.points);
       }
     }
