@@ -20,9 +20,9 @@
   var colorFn = function(x, y) {
     var c = new THREE.Color();
     if (y == 0)
-      c.setRGB( 1.0, 0, 0.2 - x * .2 );
+      c.setRGB( 1.0, 0, .3 );
     else
-      c.setRGB( 0, 1.0, 0.2 - x * .2 );
+      c.setRGB( 0, 1.0, .5 );
     return c;
   };
 
@@ -172,7 +172,7 @@
 
   function createPoints() {
     if (this._baseGeometry !== undefined) {
-        if (this._baseGeometry.morphTargets.length < 8) {
+      if (this._baseGeometry.morphTargets.length < 8) {
           // console.log('t l',this._baseGeometry.morphTargets.length);
           var padding = 8-this._baseGeometry.morphTargets.length;
           // console.log('padding', padding);
@@ -182,63 +182,59 @@
           }
         }
         this.points = new THREE.Mesh(this._baseGeometry, new THREE.MeshBasicMaterial({
-              color: 0xffffff,
-              vertexColors: THREE.FaceColors,
-              morphTargets: true
-            }));
-      scene.add(this.points);
+          color: 0xffffff,
+          vertexColors: THREE.FaceColors,
+          morphTargets: true
+        }));
+        scene.remove(scene.children[2]);
+        scene.add(this.points);
+      }
     }
-  }
 
-  function addData(data, opts) {
-    var lat, lng, size, color, i, step;
+    function addData(data, opts) {
+      var lat, lng, size, color, i, step;
 
-    step = 4;
+      step = 4;
 
       if (this._baseGeometry === undefined) {
         this._baseGeometry = new THREE.Geometry();
         for (i = 0; i < data.length; i += step) {
           lat = data[i];
           lng = data[i + 1];
-//        size = data[i + 2];
           color = colorFn(size, data[i + 3]);
-    //       if (data[i + 3] == 1)
-    //   color = new THREE.Color(0x66FF00);
-    // else
-    //   color = new THREE.Color(0xFF0000);
           size = 0;
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
-      if(this._morphTargetId === undefined) {
-        this._morphTargetId = 0;
-      } else {
-        this._morphTargetId += 1;
+        if(this._morphTargetId === undefined) {
+          this._morphTargetId = 0;
+        } else {
+          this._morphTargetId += 1;
+        }
+        opts.name = opts.name || 'morphTarget'+this._morphTargetId;
       }
-      opts.name = opts.name || 'morphTarget'+this._morphTargetId;
-    }
-    var subgeo = new THREE.Geometry();
-    for (i = 0; i < data.length; i += step) {
-      lat = data[i];
-      lng = data[i + 1];
-      size = data[i + 2];
-      color = colorFn(size, data[i + 3]);
-      size = (size+.1)*100;
-      addPoint(lat, lng, size, color, subgeo);
-    }
+      var subgeo = new THREE.Geometry();
+      for (i = 0; i < data.length; i += step) {
+        lat = data[i];
+        lng = data[i + 1];
+        size = data[i + 2];
+        color = colorFn(size, data[i + 3]);
+        size = (size+.1)*100;
+        addPoint(lat, lng, size, color, subgeo);
+      }
       this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
 
-  };
+    };
 
-  function addPoint(lat, lng, size, color, subgeo) {
+    function addPoint(lat, lng, size, color, subgeo) {
 
-    var phi = (90 - lat) * Math.PI / 180;
-    var theta = (180 - lng) * Math.PI / 180;
+      var phi = (90 - lat) * Math.PI / 180;
+      var theta = (180 - lng) * Math.PI / 180;
 
-    point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
-    point.position.y = 200 * Math.cos(phi);
-    point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
+      point.position.x = 200 * Math.sin(phi) * Math.cos(theta);
+      point.position.y = 200 * Math.cos(phi);
+      point.position.z = 200 * Math.sin(phi) * Math.sin(theta);
 
-    point.lookAt(mesh.position);
+      point.lookAt(mesh.position);
 
     point.scale.z = Math.max( size, 0.1 ); // avoid non-invertible matrix
     point.updateMatrix();

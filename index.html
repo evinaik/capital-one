@@ -126,7 +126,7 @@
   <script type="text/javascript" src="third-party/Detector.js"></script>
   <script type="text/javascript" src="third-party/three.min.js"></script>
   <script type="text/javascript" src="third-party/Tween.js"></script>
-  <script type="text/javascript" src="globe.js"></script>
+  <script type="text/javascript" src="js/globe.js"></script>
   <script type="text/javascript">
 
   //   function IndexHold()
@@ -246,11 +246,11 @@
     var container = document.getElementById('container');
     var globe = new DAT.Globe(container);
 
-    console.log(globe);
-    var i, tweens = [];
+    var i, tweens = [], curr;
 
     var settime = function(globe, t) {
       return function() {
+        curr = t;
         new TWEEN.Tween(globe).to({time: t},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
         var y = document.getElementById('word'+words[t]);
         if (y.getAttribute('class') === 'word active') {
@@ -272,12 +272,13 @@
     TWEEN.start();
 
     function update(globe, container) {
-      $.getJSON('/data/data.json', function(json) {
+      $.getJSON('data.json', function(json) {
         var data = json;
         window.data = data;
         for (i=0;i<data.length;i++)
           globe.addData(data[i][1], {name: data[i][0]});
         globe.createPoints();
+        settime(globe, curr)();
           document.body.style.backgroundImage = 'none'; // remove loading
         });
     }
