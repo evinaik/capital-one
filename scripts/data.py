@@ -45,7 +45,7 @@ class TweetStreamer(TwythonStreamer):
     def write(self, lat, lon, size, text):
         self.sendToList(lat, lon, size, text, ['clinton' in text.lower() or 'hillary' in text.lower(), 'trump' in text.lower() or 'donald' in text.lower()])
         temp = json.dumps(self.sendToFile())
-        with open('../data/data.json', 'w+') as f:
+        with open('../data.json', 'w+') as f:
             f.write(temp)
 
     def sendToList(self, lat, lon, size, text, word):
