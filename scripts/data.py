@@ -43,51 +43,60 @@ class TweetStreamer(TwythonStreamer):
         self.disconnect()
 
     def write(self, lat, lon, size, text):
-        self.sendToList(lat, lon, size, text, ['clinton' in text.lower() or 'hillary' in text.lower(), 'trump' in text.lower() or 'donald' in text.lower(), 'clown' in text.lower()])
+        self.sendToList(lat, lon, size, text, ['clinton' in text.lower() or 'hillary' in text.lower(), 'trump' in text.lower() or 'donald' in text.lower()])
         temp = json.dumps(self.sendToFile())
         with open('../data/data.json', 'w+') as f:
             f.write(temp)
 
     def sendToList(self, lat, lon, size, text, word):
         pos_score, neg_score = senti_classifier.polarity_scores([text])
-        temp = [lat, lon, size/(size+5000.0), 1 if pos_score >= neg_score else 0, datetime.datetime.now()]
+        temp = [lat, lon, size, 1 if pos_score >= neg_score else 0, datetime.datetime.now()]
         if word[0]:
             self.clintonData.extend(temp)
         if word[1]:
             self.trumpData.extend(temp)
-        if word[2]:
-            self.clownData.extend(temp)
+        if word[0] is not word[1]:
+            n = [0, 0, 0, 0, temp[4]]
+            if word[0]:
+                self.clintonData.extend(n)
+            else:
+                self.trumpData.extend(n)
 
     def sendToFile(self):
         curr = datetime.datetime.now()
-        temp = [[], [], []]
-        temp[0].append('clinton')
-        while len(self.clintonData) > 4 and (curr - self.clintonData[4]).total_seconds() >= 600:
-            self.clintonData = self.clintonData[5:]
-        temp[0].append([i for i in self.clintonData if not isinstance(i, datetime.datetime)])
+        temp = [[], []]
 
-        temp[1].append('trump')
-        while len(self.trumpData) > 4 and (curr - self.trumpData[4]).total_seconds() >= 600:
-            self.trumpData = self.trumpData[5:]
-        temp[1].append([i for i in self.trumpData if not isinstance(i, datetime.datetime)])
-
-        temp[2].append('clowns')
-        while len(self.clownData) > 4 and (curr - self.clownData[4]).total_seconds() >= 600:
-            self.clownData = self.clownData[5:]
-        temp[2].append([i for i in self.clownData if not isinstance(i, datetime.datetime)])
+        self.appendData(temp[0], self.clintonData, curr, 'clinton')
+        self.appendData(temp[1], self.trumpData, curr, 'trump')
 
         return temp
 
+    def appendData(self, l, d, c, name):
+        while len(d) > 4 and (c - d[4]).total_seconds() >= 600:
+            d = d[5:]
+        l.append(name)
+        l.append([])
+        if not d:
+            return
+        tr = [d[i + 2] for i in xrange(0, len(d), 5)]
+        if not tr:
+            return
+        r = max(tr) - min(tr)
+        if r == 0:
+            r = 1
+        for i in xrange(0, len(d), 5):
+            size = float(d[i + 2] - min(tr))/ r
+            l[1].extend([d[i], d[i + 1], size, d[i + 3]])
+
 def call(streamer):
-    # try:
-    streamer.statuses.filter(track = 'clown,trump,clinton,donald trump,hillary clinton')
-    # except:
-    #     print 'Sleeping for ' + str(sleepTime) + ' seconds'
-    #     for i in xrange(0, sleepTime, 5):
-    #         sleep(5)
-    #         print str(i + 5) + '...'
-    #     call(TweetStreamer(consumer_key, consumer_secret,
-    #                              access_token, access_token_secret))
+    try:
+        streamer.statuses.filter(track = 'trump,clinton,donald trump,hillary clinton')
+    except:
+        for i in xrange(0, sleepTime):
+            print sleepTime - i
+            sleep(1)
+        call(TweetStreamer(consumer_key, consumer_secret,
+                                 access_token, access_token_secret))
 
 if __name__ == '__main__':
     streamer = TweetStreamer(consumer_key, consumer_secret,
