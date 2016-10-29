@@ -31,6 +31,14 @@
       padding: 10px;
     }
 
+        #counth {
+      font: 12px Georgia;
+    }
+
+    #countt {
+      font: 12px Georgia;
+    }
+
     #info {
 
       font-size: 11px;
@@ -149,8 +157,8 @@
   </div>
 
   <div id="currentInfo">
-    <span id="wordclinton" class="word active">Clinton</span>
-    <span id="wordtrump" class="word">Trump</span>
+    <span id="wordclinton" class="word active">Clinton<br><span id="counth"></span></span>
+    <span id="wordtrump" class="word">Trump<br><span id="countt"></span></span>
   </div>
 
   <div id="title">Tweet Tracker</div>
@@ -171,38 +179,42 @@
   <script type="text/javascript" src="js/globe.js"></script>
   <script type="text/javascript">
 
-  if(!Detector.webgl){
-    Detector.addGetWebGLMessage();
-  } else {
+    if(!Detector.webgl){
+      Detector.addGetWebGLMessage();
+    } else {
 
-    $("#time").html("updated " + new Date().toUTCString());
-    var words = ['clinton','trump'];
-    var container = document.getElementById('container');
-    var globe = new DAT.Globe(container);
+      function formatAsK(num) {
+    return num > 999 ? (num/1000).toFixed(1) + 'k' : num;
+}
 
-    var i, tweens = [];
+      $('#time').html('updated ' + new Date().toUTCString());
+      var words = ['clinton','trump'];
+      var container = document.getElementById('container');
+      var globe = new DAT.Globe(container);
 
-    var settime = function(globe, t) {
-      return function() {
-        new TWEEN.Tween(globe).to({time: t},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
-        var y = document.getElementById('word'+words[t]);
-        if (y.getAttribute('class') === 'word active') {
-          return;
-        }
-        var yy = document.getElementsByClassName('word');
-        for(i=0; i<yy.length; i++) {
-          yy[i].setAttribute('class','word');
-        }
-        y.setAttribute('class', 'word active');
+      var i, tweens = [], count = [];
+
+      var settime = function(globe, t) {
+        return function() {
+          new TWEEN.Tween(globe).to({time: t},500).easing(TWEEN.Easing.Cubic.EaseOut).start();
+          var y = document.getElementById('word'+words[t]);
+          if (y.getAttribute('class') === 'word active') {
+            return;
+          }
+          var yy = document.getElementsByClassName('word');
+          for(i=0; i<yy.length; i++) {
+            yy[i].setAttribute('class','word');
+          }
+          y.setAttribute('class', 'word active');
+        };
       };
-    };
 
-    for(var i = 0; i<words.length; i++) {
-      var y = document.getElementById('word'+words[i]);
-      y.addEventListener('mouseover', settime(globe,i), false);
-    }
+      for(var i = 0; i<words.length; i++) {
+        var y = document.getElementById('word'+words[i]);
+        y.addEventListener('mouseover', settime(globe,i), false);
+      }
 
-    TWEEN.start();
+      TWEEN.start();
 
       $.getJSON('data.json', function(json) {
         var data = json;
@@ -210,12 +222,13 @@
         for (i=0;i<data.length;i++)
           globe.addData(data[i][1], {name: data[i][0]});
         globe.createPoints();
+        $('#counth').html('(' + formatAsK(data[0][1].length/4) + ' tweets)');
+        $('#countt').html('(' + formatAsK(data[1][1].length/4) + ' tweets)');
           document.body.style.backgroundImage = 'none'; // remove loading
         });
 
-
-    settime(globe,0)();
-    globe.animate();
+      settime(globe,0)();
+      globe.animate();
     // window.setInterval(function(){
     //   globe.rotate();
     // }, 1000);

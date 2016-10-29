@@ -4,6 +4,7 @@ from twython import TwythonStreamer
 from geopy.geocoders import Nominatim
 from senti_classifier import senti_classifier
 from time import sleep
+import numpy
 import datetime
 import nltk
 import json
@@ -79,6 +80,9 @@ class TweetStreamer(TwythonStreamer):
         if not d:
             return
         tr = [d[i + 2] for i in xrange(0, len(d), 5)]
+        iqr = numpy.subtract(*numpy.percentile(numpy.array(tr), [75, 25]))
+        med = numpy.median(iqr)
+        tr = [i for i in tr if i > med - iqr and i < med + iqr]
         if not tr:
             return
         r = max(tr) - min(tr)
@@ -86,6 +90,8 @@ class TweetStreamer(TwythonStreamer):
             r = 1
         for i in xrange(0, len(d), 5):
             size = float(d[i + 2] - min(tr))/ r
+            if size > 1:
+                size = 1
             l[1].extend([d[i], d[i + 1], size, d[i + 3]])
 
 def call(streamer):
