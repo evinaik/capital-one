@@ -217,9 +217,7 @@
         lng = data[i + 1];
         size = data[i + 2];
         color = colorFn(size, data[i + 3]);
-        size = (size) * 4000;
-        if (size > 400)
-          size /= 10;
+        size = 1 / (1 - size);
         addPoint(lat, lng, size, color, subgeo);
       }
       this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
