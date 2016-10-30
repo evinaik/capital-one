@@ -217,7 +217,7 @@
         lng = data[i + 1];
         size = data[i + 2];
         color = colorFn(size, data[i + 3]);
-        size = size * 40 + 100000;
+        size = size * 40000;
         addPoint(lat, lng, size, color, subgeo);
       }
       this._baseGeometry.morphTargets.push({'name': opts.name, vertices: subgeo.vertices});
