@@ -194,7 +194,7 @@
       var lat, lng, size, color, i, step;
 
       step = 4;
-
+      var min = 1;
       if (this._baseGeometry === undefined) {
         this._baseGeometry = new THREE.Geometry();
         for (i = 0; i < data.length; i += step) {
@@ -202,6 +202,8 @@
           lng = data[i + 1];
           color = colorFn(size, data[i + 3]);
           size = 0;
+          if (data[i + 2] < min)
+            min = data[i + 2];
           addPoint(lat, lng, size, color, this._baseGeometry);
         }
         if(this._morphTargetId === undefined) {
@@ -217,6 +219,8 @@
         lng = data[i + 1];
         size = data[i + 2];
         color = colorFn(size, data[i + 3]);
+        if (size == 0)
+          size = min;
         size = (size) * 400;
         addPoint(lat, lng, size, color, subgeo);
       }
